@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { Button } from '@/app/components';
 
 const cache = new Map();
 
@@ -38,6 +39,7 @@ export default async function ProductInfo({ params: { slug } }: { params: { slug
         <div>
             ProductInfo {slug}
             {JSON.stringify(findProduct)}
+            <Button type="button" color="danger" size="default" variant="solid">TexT</Button>
         </div>
     )
 }
