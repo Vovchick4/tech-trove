@@ -45,7 +45,7 @@ const VariantTypes: VariantType = {
     solid: "border border-transparent font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800",
     outline: "bg-transparent font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
     ghost: "bg-transparent border border-transparent font-semibold focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 dark:focus:ring-gray-900 dark:focus:ring-offset-gray-800",
-    soft: "border border-transparent font-semibold focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2",
+    soft: "border border-transparent font-semibold bg-blue-200 text-blue-800 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2",
     white: "border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800",
     link: "border-transparent bg-transparent hover:bg-transparent text-blue-500 hover:text-blue-700 border border-transparent font-semibold focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2"
 }

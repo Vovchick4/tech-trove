@@ -1,57 +1,19 @@
-// lib/dbConnect.tsx
+import { MongoClient } from 'mongodb'
 
-import _mongoose, { connect } from "mongoose";
+const uri = "mongodb+srv://root:root@cluster0.ovtftp6.mongodb.net/?retryWrites=true&w=majority"
+const options = {}
 
-declare global {
-    var mongoose: {
-        promise: ReturnType<typeof connect> | null;
-        conn: typeof _mongoose | null;
-    };
+let client: MongoClient
+let clientPromise: Promise<MongoClient>
+
+if (!uri) {
+    throw new Error('Please add your Mongo URI to .env.local')
 }
 
-const MONGODB_URI = "mongodb+srv://root:root@cluster0.ovtftp6.mongodb.net/?retryWrites=true&w=majority";
+// In production mode, it's best to not use a global variable.
+client = new MongoClient(uri, options)
+clientPromise = client.connect()
 
-if (!MONGODB_URI) {
-    throw new Error(
-        "Please define the MONGODB_URI environment variable inside .env.local"
-    );
-}
-
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections from growing exponentially
- * during API Route usage.
- */
-let cached = global.mongoose;
-
-if (!cached) {
-    cached = global.mongoose = { conn: null, promise: null };
-}
-
-async function dbConnect() {
-    if (cached.conn) {
-        return cached.conn;
-    }
-
-    if (!cached.promise) {
-        const opts = {
-            dbName: "tech-trove",
-            bufferCommands: false,
-        };
-
-        cached.promise = connect(MONGODB_URI!, opts).then((mongoose) => {
-            return mongoose;
-        });
-    }
-
-    try {
-        cached.conn = await cached.promise;
-    } catch (e) {
-        cached.promise = null;
-        throw e;
-    }
-
-    return cached.conn;
-}
-
-export default dbConnect;
+// Export a module-scoped MongoClient promise. By doing this in a
+// separate module, the client can be shared across functions.
+export default clientPromise

@@ -1,16 +1,16 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-import dbConnect from "../../data-source";
-import ProductModel from '../../schema/product';
+import Product from '../../schema/product';
 
-(async () => {
-    await dbConnect();
-})()
+const product = new Product();
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     try {
-        const products = await ProductModel.find();
-        return NextResponse.json(products);
+        const getSlug = request.nextUrl.searchParams.get("slug");
+        if (getSlug) {
+            return NextResponse.json(await product.findBySlug(getSlug));
+        }
+        return NextResponse.json(await product.findAll());
     } catch (error) {
         return NextResponse.json({ error: 'Error fetching data' });
     }
