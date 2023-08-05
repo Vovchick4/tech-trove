@@ -13,7 +13,7 @@ async function setToCache(key: string | string[], func: () => any) {
 }
 
 async function getData(slug: string) {
-    const dataFromCache = await setToCache(slug, async () => (await (await fetch(`http://localhost:3000/api/products?slug=${slug}`)).json()));
+    const dataFromCache: IProductData | null = await setToCache(slug, async () => (await (await fetch(`http://localhost:3000/api/products?slug=${slug}`)).json()));
 
     return dataFromCache;
 }
@@ -33,7 +33,7 @@ export default async function ProductInfo({ params: { slug } }: { params: { slug
             <br />
             <Button type="button" color="danger" size="default" variant="solid">Solid btn</Button>
             <Button type="button" color="danger" size="default" variant="outline">Outline btn</Button>
-            <Button type="button" color="danger" size="default" variant="ghost">Ghost btn</Button>
+            <Button type="button" color="warning" size="default" variant="ghost">Ghost btn</Button>
             <Button type="button" color="danger" size="default" variant="soft">Soft btn</Button>
         </div>
     )
