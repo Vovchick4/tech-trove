@@ -1,6 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import DynamicScriptComponent from './lib'
+import Footer from './components/footer'
+import Header from './components/header'
+import Offcanvas from './components/offcanvas'
+import Navbar from './components/navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <Header />
+        <Navbar />
+        <Offcanvas />
+        <div>{children}</div>
+        <Footer />
+        <DynamicScriptComponent />
       </body>
     </html>
   )
