@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import { Button } from '@/app/components';
-import { IProductData } from '@/app/api/schema/product';
 
 const cache = new Map();
 
@@ -13,7 +12,7 @@ async function setToCache(key: string | string[], func: () => any) {
 }
 
 async function getData(slug: string) {
-    const dataFromCache: IProductData | null = await setToCache(slug, async () => (await (await fetch(`http://localhost:3000/api/products?slug=${slug}`)).json()));
+    const dataFromCache = await setToCache(slug, async () => (await (await fetch(`http://localhost:3000/api/products?slug=${slug}`, { cache: "no-cache" })).json()));
 
     return dataFromCache;
 }
