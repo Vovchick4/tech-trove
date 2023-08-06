@@ -2,10 +2,14 @@
 
 import { Button } from '@/components'
 import { useTheme } from '@/context/theme-context'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 
 export default function Home() {
-  const {toggleTheme} = useTheme()
+  const session = useSession()
+  const { toggleTheme } = useTheme()
+  console.log("🚀 ~ file: page.tsx:11 ~ Home ~ session:", session.status)
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="border-b border-gray-200 dark:border-gray-700">
@@ -23,8 +27,8 @@ export default function Home() {
       </div>
       <p className='bg-yellow-800 dark:bg-red-800'>text</p>
       <Button variant='ghost' color='danger' roundedFull leftIcon={<svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-  </svg>} onClick={toggleTheme}>ChangeThemes</Button>
+        <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
+      </svg>} onClick={toggleTheme}>ChangeThemes</Button>
       <div className="mt-3">
         <div id="tabs-with-underline-1" role="tabpanel" aria-labelledby="tabs-with-underline-item-1">
           <p className="text-gray-500 dark:text-gray-400">

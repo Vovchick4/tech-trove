@@ -3,41 +3,41 @@
 import { useLocalStorage } from "@/hooks"
 import React from "react"
 
-interface IThemeContext{
+interface IThemeContext {
     isDark: boolean,
-    toggleTheme: ()=>void
+    toggleTheme: () => void
 }
 
 const ThemeContext = React.createContext<IThemeContext>({} as IThemeContext)
 
-interface IThemeProvider{
+interface IThemeProvider {
     children: React.ReactNode
 }
 
-export function useTheme(){
+export function useTheme() {
     return React.useContext(ThemeContext)
 }
 
-export default function ThemeProvider({children}: IThemeProvider) {
+export default function ThemeProvider({ children }: IThemeProvider) {
     const [theme, setTheme] = useLocalStorage("isDark", false)
 
-    React.useEffect(()=>{
-        if(theme){
+    React.useEffect(() => {
+        if (theme) {
             document.documentElement.classList.add('dark')
             document.documentElement.classList.remove('light')
-        } else{
+        } else {
             document.documentElement.classList.add('light')
             document.documentElement.classList.remove('dark')
         }
     }, [theme])
-    
-    function toggleTheme(){
+
+    function toggleTheme() {
         setTheme((prev: boolean) => !prev)
     }
- 
-    return(
-        <ThemeContext.Provider value={{isDark:theme,toggleTheme}}>
-        {children}
+
+    return (
+        <ThemeContext.Provider value={{ isDark: theme, toggleTheme }}>
+            {children}
         </ThemeContext.Provider>
     )
 }
