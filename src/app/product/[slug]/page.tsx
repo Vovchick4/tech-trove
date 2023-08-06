@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { Button } from '@/app/components';
+import { Button } from '@/components';
 
 const cache = new Map();
 

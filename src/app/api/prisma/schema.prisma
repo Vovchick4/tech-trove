@@ -15,3 +15,12 @@ model Product {
     name String
     slug String
 }
+
+model User {
+    id        String   @id @default(uuid()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    email     String   @unique
+    name      String?
+    photo     String?
+    password  String
+}
