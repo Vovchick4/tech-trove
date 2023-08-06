@@ -19,7 +19,7 @@ export function useTheme() {
 }
 
 export default function ThemeProvider({ children }: IThemeProvider) {
-    const [theme, setTheme] = useLocalStorage("isDark", false)
+    const [theme, setTheme] = useLocalStorage<boolean>("isDark", false)
 
     React.useEffect(() => {
         if (theme) {
@@ -32,7 +32,7 @@ export default function ThemeProvider({ children }: IThemeProvider) {
     }, [theme])
 
     function toggleTheme() {
-        setTheme((prev: boolean) => !prev)
+        setTheme((prev) => !prev)
     }
 
     return (
