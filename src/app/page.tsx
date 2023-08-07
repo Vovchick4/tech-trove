@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import ConsoleImage from '../../public/Console-image-category.jpg';
 import AccessoriesImage from '../../public/Accessories-image-category.jpg';
@@ -6,7 +8,16 @@ import PCImage from '../../public/PC-image-category.jpg';
 import Link from 'next/link';
 import MultiItemCarousel from './components/carusel';
 
+import { Button, Input } from '@/components';
+import { useTheme } from '@/context/theme-context';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+
 export default function Home() {
+  const session = useSession();
+  const { toggleTheme } = useTheme();
+  console.log('🚀 ~ file: page.tsx:11 ~ Home ~ session:', session.status);
+
   return (
     <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
       <div className="rounded-[30px] bg-slate-700 p-12">

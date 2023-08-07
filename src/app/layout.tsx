@@ -7,6 +7,9 @@ import Header from './components/header'
 import Offcanvas from './components/offcanvas'
 import Navbar from './components/navbar'
 
+import { NextAuthProvider } from '@/providers'
+import { ThemeProvider } from '@/context'
+        
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -22,12 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <Navbar />
-        <Offcanvas />
-        <div>{children}</div>
-        <Footer />
-        <DynamicScriptComponent />
+        <ThemeProvider>
+          <NextAuthProvider>
+            <Header />
+            <Navbar />
+            <Offcanvas />
+               {children}        
+            <Footer />
+            <DynamicScriptComponent />
+          </NextAuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
