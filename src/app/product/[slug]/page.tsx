@@ -4,6 +4,7 @@ import { Button } from '@/components';
 const cache = new Map();
 
 async function setToCache(key: string | string[], func: () => any) {
+
     if (!cache.has(key)) {
         cache.set(key, await func());
         return cache.get(key);

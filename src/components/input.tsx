@@ -12,6 +12,7 @@ import Button, { SizeType } from './button';
 export interface IInput
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
   isValidIcons?: boolean;
+  leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   size?: keyof SizeType;
   roundedFull?: boolean;
@@ -62,6 +63,7 @@ export default function Input({
   size = 'default',
   roundedFull = false,
   isValidIcons = true,
+  leftIcon,
   rightIcon,
   className = '',
   label = '',
@@ -75,6 +77,12 @@ export default function Input({
 
     if (roundedFull) {
       classes.push('rounded-full');
+    } else {
+      classes.push('rounded-md');
+    }
+
+    if (leftIcon) {
+      classes.push('pl-12');
     }
 
     if (rightIcon && isValidIcons) {
@@ -89,10 +97,14 @@ export default function Input({
       } else {
         classes.push('focus:border-green-500 dark:focus:border-green-500');
       }
+    } else {
+      classes.push(
+        'border-gray-200 focus:border-gray-900 dark:border-gray-700 dark:focus:border-gray-500'
+      );
     }
 
     return classes.join(' ');
-  }, [size, error, rightIcon, roundedFull, isValidIcons]);
+  }, [size, error, leftIcon, rightIcon, roundedFull, isValidIcons]);
 
   return (
     <React.Fragment>
@@ -103,9 +115,12 @@ export default function Input({
       )}
       {helperText && <p className="text-sm text-gray-500 my-2">{helperText}</p>}
       <div className="relative">
+        <div className="flex items-center gap-2 absolute top-1/2 left-4 -translate-y-1/2">
+          {leftIcon && leftIcon}
+        </div>
         <input
           className={
-            'block w-full outline-none text-black border-2 border-gray-500 rounded-md transition-all focus:border-blue-500 dark:focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400' +
+            'block w-full outline-none text-black border-2 transition-all dark:focus:ring-blue-500 dark:bg-slate-900 dark:text-gray-400' +
             ` ${styles} ` +
             className
           }
