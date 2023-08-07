@@ -22,7 +22,7 @@ interface ColorType {
     white: string,
 }
 
-interface SizeType {
+export interface SizeType {
     small: string,
     default: string,
     large: string,
