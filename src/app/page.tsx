@@ -1,52 +1,143 @@
-'use client'
+'use client';
 
-import { Button } from '@/components'
-import { useTheme } from '@/context/theme-context'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
+import { Button, Input } from '@/components';
+import { useTheme } from '@/context/theme-context';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 export default function Home() {
-  const session = useSession()
-  const { toggleTheme } = useTheme()
-  console.log("🚀 ~ file: page.tsx:11 ~ Home ~ session:", session.status)
+  const session = useSession();
+  const { toggleTheme } = useTheme();
+  console.log('🚀 ~ file: page.tsx:11 ~ Home ~ session:', session.status);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="border-b border-gray-200 dark:border-gray-700">
         <nav className="flex space-x-2" aria-label="Tabs" role="tablist">
-          <button type="button" className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 active" id="tabs-with-underline-item-1" data-hs-tab="#tabs-with-underline-1" aria-controls="tabs-with-underline-1" role="tab">
+          <button
+            type="button"
+            className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 active"
+            id="tabs-with-underline-item-1"
+            data-hs-tab="#tabs-with-underline-1"
+            aria-controls="tabs-with-underline-1"
+            role="tab"
+          >
             Tab 1
           </button>
-          <button type="button" className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600" id="tabs-with-underline-item-2" data-hs-tab="#tabs-with-underline-2" aria-controls="tabs-with-underline-2" role="tab">
+          <button
+            type="button"
+            className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600"
+            id="tabs-with-underline-item-2"
+            data-hs-tab="#tabs-with-underline-2"
+            aria-controls="tabs-with-underline-2"
+            role="tab"
+          >
             Tab 2
           </button>
-          <button type="button" className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600" id="tabs-with-underline-item-3" data-hs-tab="#tabs-with-underline-3" aria-controls="tabs-with-underline-3" role="tab">
+          <button
+            type="button"
+            className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600"
+            id="tabs-with-underline-item-3"
+            data-hs-tab="#tabs-with-underline-3"
+            aria-controls="tabs-with-underline-3"
+            role="tab"
+          >
             Tab 3
           </button>
         </nav>
       </div>
-      <p className='bg-yellow-800 dark:bg-red-800'>text</p>
-      <Button variant='ghost' color='danger' roundedFull leftIcon={<svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
-      </svg>} onClick={toggleTheme}>ChangeThemes</Button>
+      <p className="bg-yellow-800 dark:bg-red-800">text</p>
+      <div className="max-w-lg">
+        <Input.TextArea />
+        <Input.Password />
+        <Input
+          label="Email"
+          helperText="Some helper text example"
+          placeholder="We'll no share email"
+          error="Email must be valid"
+          isValidIcons
+          rightIcon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-eye-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+            </svg>
+          }
+        />
+      </div>
+      <Button
+        variant="ghost"
+        color="danger"
+        roundedFull
+        leftIcon={
+          <svg
+            className="w-5 h-5"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z" />
+          </svg>
+        }
+        onClick={toggleTheme}
+      >
+        ChangeThemes
+      </Button>
       <div className="mt-3">
-        <div id="tabs-with-underline-1" role="tabpanel" aria-labelledby="tabs-with-underline-item-1">
+        <div
+          id="tabs-with-underline-1"
+          role="tabpanel"
+          aria-labelledby="tabs-with-underline-item-1"
+        >
           <p className="text-gray-500 dark:text-gray-400">
-            This is the <em className="font-semibold text-gray-800 dark:text-gray-200">first</em> {"item's"} tab body.
+            This is the{' '}
+            <em className="font-semibold text-gray-800 dark:text-gray-200">
+              first
+            </em>{' '}
+            {"item's"} tab body.
           </p>
         </div>
-        <div id="tabs-with-underline-2" className="hidden" role="tabpanel" aria-labelledby="tabs-with-underline-item-2">
+        <div
+          id="tabs-with-underline-2"
+          className="hidden"
+          role="tabpanel"
+          aria-labelledby="tabs-with-underline-item-2"
+        >
           <p className="text-gray-500 dark:text-gray-400">
-            This is the <em className="font-semibold text-gray-800 dark:text-gray-200">second</em> {"item's"}tab body.
+            This is the{' '}
+            <em className="font-semibold text-gray-800 dark:text-gray-200">
+              second
+            </em>{' '}
+            {"item's"}tab body.
           </p>
         </div>
-        <div id="tabs-with-underline-3" className="hidden" role="tabpanel" aria-labelledby="tabs-with-underline-item-3">
+        <div
+          id="tabs-with-underline-3"
+          className="hidden"
+          role="tabpanel"
+          aria-labelledby="tabs-with-underline-item-3"
+        >
           <p className="text-gray-500 dark:text-gray-400">
-            This is the <em className="font-semibold text-gray-800 dark:text-gray-200">third</em> {"item's"} tab body.
+            This is the{' '}
+            <em className="font-semibold text-gray-800 dark:text-gray-200">
+              third
+            </em>{' '}
+            {"item's"} tab body.
           </p>
         </div>
       </div>
-      <button type="button" className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+      <button
+        type="button"
+        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+      >
         Small
       </button>
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -155,5 +246,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
