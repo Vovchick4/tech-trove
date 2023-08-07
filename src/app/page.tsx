@@ -1,23 +1,16 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
+
+import { Carusel } from '@/components';
+
+import PCImage from '../../public/PC-image-category.jpg';
 import ConsoleImage from '../../public/Console-image-category.jpg';
 import AccessoriesImage from '../../public/Accessories-image-category.jpg';
 import ControllersImage from '../../public/Controllers-image-category.jpg';
-import PCImage from '../../public/PC-image-category.jpg';
-import Link from 'next/link';
-import MultiItemCarousel from './components/carusel';
-
-import { Button, Input } from '@/components';
-import { useTheme } from '@/context/theme-context';
-import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 
 export default function Home() {
-  const session = useSession();
-  const { toggleTheme } = useTheme();
-  console.log('🚀 ~ file: page.tsx:11 ~ Home ~ session:', session.status);
-
   return (
     <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
       <div className="rounded-[30px] bg-slate-700 p-12">
@@ -32,7 +25,7 @@ export default function Home() {
               href={'/'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={ConsoleImage}
@@ -50,14 +43,14 @@ export default function Home() {
               href={'/'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
-                src={ConsoleImage}
+                src={PCImage}
                 alt={'ImageConsole'}
               />
               <div className="absolute bottom-2 text-lg pointer-events-none">
-                <p className="font-bold text-lg transition-all">Console</p>
+                <p className="font-bold text-lg transition-all">PC</p>
               </div>
             </Link>
           </div>
@@ -68,14 +61,14 @@ export default function Home() {
               href={'/'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
-                src={ConsoleImage}
+                src={AccessoriesImage}
                 alt={'ImageConsole'}
               />
               <div className="absolute bottom-2 text-lg pointer-events-none">
-                <p className="font-bold text-lg transition-all">Console</p>
+                <p className="font-bold text-lg transition-all">Accessories</p>
               </div>
             </Link>
           </div>
@@ -86,14 +79,14 @@ export default function Home() {
               href={'/'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
-                src={ConsoleImage}
+                src={ControllersImage}
                 alt={'ImageConsole'}
               />
               <div className="absolute bottom-2 text-lg pointer-events-none">
-                <p className="font-bold text-lg transition-all">Console</p>
+                <p className="font-bold text-lg transition-all">Controllers</p>
               </div>
             </Link>
           </div>
@@ -105,7 +98,7 @@ export default function Home() {
           <h1 className="font-bold text-3xl py-6">Best sales</h1>
         </div>
 
-        <MultiItemCarousel />
+        <Carusel />
       </div>
 
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 ">
@@ -113,7 +106,7 @@ export default function Home() {
           <h1 className="font-bold text-3xl py-6">Hot discounts</h1>
         </div>
 
-        <MultiItemCarousel />
+        <Carusel />
       </div>
     </main>
   );
