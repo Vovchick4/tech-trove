@@ -8,12 +8,16 @@ import 'slick-carousel/slick/slick-theme.css';
 
 const products = [
   { title: 'Logitech C-700', describe: 'Web-cam', price: '100$' },
-  { title: 'Product 2', describe: 'Description 2', price: '200$' },
+  { title: 'Product 2', describe: 'Description 2nsmfnsnamfn', price: '200$' },
   { title: 'Product 3', describe: 'Description 3', price: '300$' },
   { title: 'Product 4', describe: 'Description 4', price: '400$' },
-  { title: 'Product 5', describe: 'Description 5', price: '400$' },
+  { title: 'Product 5', describe: 'Description 5s,mmnmnsanjg', price: '400$' },
   { title: 'Product 6', describe: 'Description 6', price: '400$' },
-  { title: 'Product 7', describe: 'Description 7', price: '400$' },
+  {
+    title: 'Product 7',
+    describe: 'Description 7sgnnsnamgns,agb,sabngbsnmbgmna',
+    price: '400$',
+  },
   { title: 'Product 8', describe: 'Description 8', price: '400$' },
   { title: 'Product 9', describe: 'Description 9', price: '400$' },
 ];
@@ -45,7 +49,7 @@ export default function MultiItemCarousel() {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 750,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
@@ -53,7 +57,7 @@ export default function MultiItemCarousel() {
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 600,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
