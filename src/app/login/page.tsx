@@ -1,24 +1,36 @@
 'use client';
-import { Button, Input } from '@/components';
-import Link from 'next/link';
-import { FcGoogle } from 'react-icons/fc';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
-const SignupSchema = yup.object().shape({
-    email: yup.string().email().required('Email is required'),
-    password: yup.string().required('Password is required'),
-  });
+import Link from 'next/link';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { FcGoogle } from 'react-icons/fc';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+import { Button, Input } from '@/components';
+
+export interface ILoginData {
+  email: string;
+  password: string;
+  remember_me: boolean;
+}
+
+const schema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().trim().min(8).required(),
+  remember_me: yup.boolean().default(false),
+});
 
 export default function Login() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(SignupSchema),
+  } = useForm<ILoginData>({
+    resolver: yupResolver(schema),
   });
+
+  const onSubmit: SubmitHandler<ILoginData> = (data) => console.log(data);
 
   return (
     <div className="w-full max-w-md mx-auto p-6">
@@ -34,7 +46,6 @@ export default function Login() {
                 className="text-blue-600 decoration-2 hover:underline font-medium"
                 href="../examples/html/signup.html"
               >
-                {' '}
                 Sign up here
               </Link>
             </p>
@@ -55,24 +66,17 @@ export default function Login() {
               Or
             </div>
 
-            <form
-              onSubmit={handleSubmit((data) => {
-                console.log(data);
-              })}
-            >
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-y-4">
                 <Input
-                  {...register('email')}
+                  useFormHelper={{ ...register('email') }}
                   label="Enter email"
                   error={errors.email?.message}
                 />
                 <div>
                   <div>
                     <Input.Password
-                      {...register('password', {
-                        required: true,
-                        minLength: 8,
-                      })}
+                      useFormHelper={{ ...register('password') }}
                       label="Password"
                       error={errors.password?.message}
                     />
@@ -84,24 +88,11 @@ export default function Login() {
                     </a>
                   </div>
                 </div>
-                <div className="flex items-center">
-                  <div className="flex">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <label
-                      htmlFor="remember-me"
-                      className="text-sm dark:text-white"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div>
+
+                <Input.CheckBox
+                  label="Remember me?"
+                  useFormHelper={{ ...register('remember_me') }}
+                />
 
                 <Button
                   type="submit"

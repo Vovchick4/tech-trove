@@ -10,7 +10,7 @@ import {
 import Button, { SizeType } from './button';
 
 export interface IInput
-  extends Omit<React.ComponentPropsWithoutRef<'input'>, 'size'> {
+  extends Omit<React.ComponentPropsWithRef<'input'>, 'size'> {
   isValidIcons?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -20,6 +20,7 @@ export interface IInput
   label?: string;
   helperText?: string;
   error?: string;
+  useFormHelper?: any;
 }
 
 export const InputSize: SizeType = {
@@ -28,23 +29,57 @@ export const InputSize: SizeType = {
   large: 'py-3 px-4 sm:p-5',
 };
 
+const CheckBox = ({
+  label,
+  useFormHelper,
+  ...props
+}: Pick<IInput, 'label' | 'useFormHelper'>) => {
+  return (
+    <div className="flex">
+      <input
+        type="checkbox"
+        className="h-5 w-5 shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+        id="hs-default-checkbox"
+        {...useFormHelper}
+        {...props}
+      />
+      <label
+        htmlFor="hs-default-checkbox"
+        className="text-sm text-gray-500 ml-3 dark:text-gray-400"
+      >
+        {label}
+      </label>
+    </div>
+  );
+};
+
 const InputPassword = (
-  props: Pick<IInput, 'isValidIcons' | 'helperText' | 'label' | 'error'>
+  props: Pick<
+    IInput,
+    'isValidIcons' | 'helperText' | 'label' | 'error' | 'useFormHelper'
+  >
 ) => {
   const [isPass, setIsPass] = React.useState(true);
   return (
     <Input
       type={!isPass ? 'text' : 'password'}
-      {...props}
       rightIcon={
         <Button
           style={{ backgroundColor: 'transparent', padding: '3.4px' }}
           size="small"
           onClick={() => setIsPass((prev) => !prev)}
         >
-          {!isPass ? <AiTwotoneEye className="text-black dark:text-white" size={20} /> : <AiTwotoneEyeInvisible className="text-black dark:text-white" size={20} />}
+          {!isPass ? (
+            <AiTwotoneEye className="text-black dark:text-white" size={20} />
+          ) : (
+            <AiTwotoneEyeInvisible
+              className="text-black dark:text-white"
+              size={20}
+            />
+          )}
         </Button>
       }
+      {...props}
     />
   );
 };
@@ -69,6 +104,7 @@ export default function Input({
   label = '',
   helperText = '',
   error = '',
+  useFormHelper,
   ...rest
 }: IInput) {
   const styles = React.useMemo(() => {
@@ -124,10 +160,16 @@ export default function Input({
             ` ${styles} ` +
             className
           }
+          {...useFormHelper}
           {...rest}
         />
         <div className="flex items-center gap-2 absolute top-1/2 right-2 -translate-y-1/2">
-          {isValidIcons && (error ? <AiFillInfoCircle className="text-red-500" size={20} /> : <AiOutlineCheck className="text-green-500" size={20} />)}
+          {isValidIcons &&
+            (error ? (
+              <AiFillInfoCircle className="text-red-500" size={20} />
+            ) : (
+              <AiOutlineCheck className="text-green-500" size={20} />
+            ))}
           {rightIcon && rightIcon}
         </div>
       </div>
@@ -136,5 +178,6 @@ export default function Input({
   );
 }
 
+Input.CheckBox = CheckBox;
 Input.TextArea = TextArea;
 Input.Password = InputPassword;
