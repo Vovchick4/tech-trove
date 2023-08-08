@@ -1,88 +1,83 @@
 'use client';
 
-import React from 'react';
+import React, { use } from 'react';
 import Slider from 'react-slick';
 import ProductCard, { CardProps } from './product-card';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import setToCache from '@/app/lib/cache';
 
-const products = [
-  { title: 'Logitech C-700', describe: 'Web-cam', price: '100$' },
-  { title: 'Product 2', describe: 'Description 2nsmfnsnamfn', price: '200$' },
-  { title: 'Product 3', describe: 'Description 3', price: '300$' },
-  { title: 'Product 4', describe: 'Description 4', price: '400$' },
-  { title: 'Product 5', describe: 'Description 5s,mmnmnsanjg', price: '400$' },
-  { title: 'Product 6', describe: 'Description 6', price: '400$' },
-  {
-    title: 'Product 7',
-    describe: 'Description 7sgnnsnamgns,agb,sabngbsnmbgmna',
-    price: '400$',
-  },
-  { title: 'Product 8', describe: 'Description 8', price: '400$' },
-  { title: 'Product 9', describe: 'Description 9', price: '400$' },
-];
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  responsive: [
+    {
+      breakpoint: 1100,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 750,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 1,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        initialSlide: 1,
+      },
+    },
+  ],
+};
 
-export default function MultiItemCarousel({
-  products,
-}: {
-  products: CardProps[];
-}) {
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    responsive: [
-      {
-        breakpoint: 1100,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 750,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 1,
-        },
-      },
-    ],
-  };
+const fetchProduct = async () => {
+  const products: CardProps[] = await setToCache(
+    'products',
+    async () =>
+      await (
+        await fetch('http://localhost:3000/api/products', { cache: 'no-cache' })
+      ).json()
+  );
+  return products;
+};
+
+export default function MultiItemCarousel({}: {}) {
+  const products = use(fetchProduct());
 
   return (
     <Slider {...settings}>
-      {products.map((product, index) => (
-        <div key={index} className="px-2">
-          <ProductCard
-            name={product.name}
-            describe={product.describe}
-            price={product.price}
-            slug={product.slug}
-          />
-        </div>
-      ))}
+      {products &&
+        products.map((product, index) => (
+          <div key={index} className="px-2">
+            <ProductCard
+              name={product.name}
+              describe={product.describe}
+              price={product.price}
+              slug={product.slug}
+            />
+          </div>
+        ))}
     </Slider>
   );
 }

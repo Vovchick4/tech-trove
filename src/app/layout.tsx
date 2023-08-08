@@ -1,11 +1,19 @@
 import './globals.css';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import Loading from './loading';
 import { ThemeProvider } from '@/context';
 import DynamicScriptComponent from './lib';
 import { NextAuthProvider } from '@/providers';
-import { Header, NavBar, OffCanvas, Footer } from '@/components';
+import { NavBar, OffCanvas, Footer } from '@/components';
+
+const HeaderDynamic = dynamic(() => import('@/components/header'), {
+  loading: () => <p>Loading...</p>,
+  ssr: true,
+});
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,11 +33,11 @@ export default function RootLayout({
         <ThemeProvider>
           <NextAuthProvider>
             <div className={'flex flex-col justify-between min-h-screen'}>
-            <Header />
-            <NavBar />
-            <OffCanvas />
-            {children}
-            <Footer />
+              <HeaderDynamic />
+              <NavBar />
+              <OffCanvas />
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+              <Footer />
             </div>
             <DynamicScriptComponent />
           </NextAuthProvider>
