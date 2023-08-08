@@ -1,40 +1,97 @@
-import Image from 'next/image'
+import Image from 'next/image';
+import ConsoleImage from '../../public/Console-image-category.jpg';
+import AccessoriesImage from '../../public/Accessories-image-category.jpg';
+import ControllersImage from '../../public/Controllers-image-category.jpg';
+import PCImage from '../../public/PC-image-category.jpg';
+import Link from 'next/link';
+import MultiItemCarousel from './components/carousel';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="flex space-x-2" aria-label="Tabs" role="tablist">
-          <button type="button" className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 active" id="tabs-with-underline-item-1" data-hs-tab="#tabs-with-underline-1" aria-controls="tabs-with-underline-1" role="tab">
-            Tab 1
-          </button>
-          <button type="button" className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600" id="tabs-with-underline-item-2" data-hs-tab="#tabs-with-underline-2" aria-controls="tabs-with-underline-2" role="tab">
-            Tab 2
-          </button>
-          <button type="button" className="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600" id="tabs-with-underline-item-3" data-hs-tab="#tabs-with-underline-3" aria-controls="tabs-with-underline-3" role="tab">
-            Tab 3
-          </button>
-        </nav>
-      </div>
+    <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
+      <div className="rounded-[30px] bg-slate-700 p-12">
+        <div>
+          <h1 className="font-bold text-3xl py-6">Shop by category</h1>
+        </div>
 
-      <div className="mt-3">
-        <div id="tabs-with-underline-1" role="tabpanel" aria-labelledby="tabs-with-underline-item-1">
-          <p className="text-gray-500 dark:text-gray-400">
-            This is the <em className="font-semibold text-gray-800 dark:text-gray-200">first</em> {"item's"} tab body.
-          </p>
-        </div>
-        <div id="tabs-with-underline-2" className="hidden" role="tabpanel" aria-labelledby="tabs-with-underline-item-2">
-          <p className="text-gray-500 dark:text-gray-400">
-            This is the <em className="font-semibold text-gray-800 dark:text-gray-200">second</em> {"item's"}tab body.
-          </p>
-        </div>
-        <div id="tabs-with-underline-3" className="hidden" role="tabpanel" aria-labelledby="tabs-with-underline-item-3">
-          <p className="text-gray-500 dark:text-gray-400">
-            This is the <em className="font-semibold text-gray-800 dark:text-gray-200">third</em> {"item's"} tab body.
-          </p>
+        <div className=" flex flex-wrap justify-center flex-row p-4 w-full h-full gap-4">
+          <div className="flex justify-center w-300 min-w-250">
+            <Link
+              className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
+              href={'/'}
+            >
+              <Image
+                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                width={250}
+                height={300}
+                src={ConsoleImage}
+                alt={'ImageConsole'}
+              />
+              <div className="absolute bottom-2 text-lg pointer-events-none">
+                <p className="font-bold text-lg transition-all">Console</p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="flex justify-center w-300 min-w-250">
+            <Link
+              className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
+              href={'/'}
+            >
+              <Image
+                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                width={250}
+                height={300}
+                src={AccessoriesImage}
+                alt={'AccessoriesImage'}
+              />
+              <div className="absolute bottom-2 text-lg pointer-events-none">
+                <p className="font-bold text-lg transition-all">Accessories</p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="flex justify-center w-300 min-w-250">
+            <Link
+              className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
+              href={'/'}
+            >
+              <Image
+                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                width={250}
+                height={300}
+                src={ControllersImage}
+                alt={'ControllersImage'}
+              />
+              <div className="absolute bottom-2 text-lg pointer-events-none">
+                <p className="font-bold text-lg transition-all">Controllers</p>
+              </div>
+            </Link>
+          </div>
+
+          <div className="flex justify-center w-300 min-w-250">
+            <Link
+              className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
+              href={'/'}
+            >
+              <Image
+                className="rounded-[30px] h-full transition-all opacity-75 hover:opacity-25 hover:scale-125"
+                width={250}
+                height={300}
+                src={PCImage}
+                alt={'PCImage'}
+              />
+              <div className="absolute bottom-2 text-lg pointer-events-none">
+                <p className="font-bold text-lg transition-all">PC</p>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
-      <button type="button" className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+      <button
+        type="button"
+        className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+      >
         Small
       </button>
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -143,5 +200,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
