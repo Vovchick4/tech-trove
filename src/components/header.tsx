@@ -13,8 +13,10 @@ import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 
 import { Button, Input } from '.';
 import { useTheme } from '@/context/theme-context';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
+  const router = useRouter();
   const { status } = useSession();
   const { isDark, toggleTheme } = useTheme();
 
@@ -151,6 +153,7 @@ export default function Header() {
                 className="h-[2.375rem] w-[2.375rem]"
                 color="blackedOpacity"
                 roundedFull
+                onClick={()=> router.push('/login')}
               >
                 <CiLogin size={18} />
               </Button>

@@ -42,7 +42,7 @@ const InputPassword = (
           size="small"
           onClick={() => setIsPass((prev) => !prev)}
         >
-          {!isPass ? <AiTwotoneEye /> : <AiTwotoneEyeInvisible />}
+          {!isPass ? <AiTwotoneEye className="text-black dark:text-white" size={20} /> : <AiTwotoneEyeInvisible className="text-black dark:text-white" size={20} />}
         </Button>
       }
     />
@@ -127,7 +127,7 @@ export default function Input({
           {...rest}
         />
         <div className="flex items-center gap-2 absolute top-1/2 right-2 -translate-y-1/2">
-          {isValidIcons && (error ? <AiFillInfoCircle /> : <AiOutlineCheck />)}
+          {isValidIcons && (error ? <AiFillInfoCircle className="text-red-500" size={20} /> : <AiOutlineCheck className="text-green-500" size={20} />)}
           {rightIcon && rightIcon}
         </div>
       </div>
