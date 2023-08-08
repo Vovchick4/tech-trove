@@ -15,7 +15,7 @@ export default async function Home() {
   ).json();
   return (
     <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
-      <div className="rounded-[30px] bg-slate-700 p-12">
+      <div className="rounded-[30px] bg-slate-700 p-12 text-white black:text-white">
         <div>
           <h1 className="font-bold text-3xl py-6">Shop by category</h1>
         </div>
