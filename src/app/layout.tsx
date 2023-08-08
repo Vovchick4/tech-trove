@@ -24,11 +24,13 @@ export default function RootLayout({
       <body className={inter.className + ' bg-white dark:bg-black'}>
         <ThemeProvider>
           <NextAuthProvider>
+            <div className={'flex flex-col justify-between min-h-screen'}>
             <Header />
             <NavBar />
             <OffCanvas />
             {children}
             <Footer />
+            </div>
             <DynamicScriptComponent />
           </NextAuthProvider>
         </ThemeProvider>
