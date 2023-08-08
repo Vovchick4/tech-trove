@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Slider from 'react-slick';
-import ProductCard from './product-card';
+import ProductCard, { CardProps } from './product-card';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -22,7 +22,11 @@ const products = [
   { title: 'Product 9', describe: 'Description 9', price: '400$' },
 ];
 
-export default function MultiItemCarousel() {
+export default function MultiItemCarousel({
+  products,
+}: {
+  products: CardProps[];
+}) {
   var settings = {
     dots: true,
     infinite: true,
@@ -72,9 +76,10 @@ export default function MultiItemCarousel() {
       {products.map((product, index) => (
         <div key={index} className="px-2">
           <ProductCard
-            title={product.title}
+            name={product.name}
             describe={product.describe}
             price={product.price}
+            slug={product.slug}
           />
         </div>
       ))}

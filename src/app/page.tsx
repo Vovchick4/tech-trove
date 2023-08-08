@@ -1,14 +1,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
-
-import { Carusel } from '@/components';
+import { Button, MultiItemCarousel } from '@/components';
 
 import PCImage from '../../public/PC-image-category.jpg';
 import ConsoleImage from '../../public/Console-image-category.jpg';
 import AccessoriesImage from '../../public/Accessories-image-category.jpg';
 import ControllersImage from '../../public/Controllers-image-category.jpg';
 
-export default function Home() {
+import { CardProps } from '@/components/product-card';
+
+export default async function Home() {
+  const products: CardProps[] = await (
+    await fetch('http://localhost:3000/api/products')
+  ).json();
   return (
     <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
       <div className="rounded-[30px] bg-slate-700 p-12">
@@ -96,7 +100,7 @@ export default function Home() {
           <h1 className="font-bold text-3xl py-6">Best sales</h1>
         </div>
 
-        <Carusel />
+        <MultiItemCarousel products={products} />
       </div>
 
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 ">
@@ -104,7 +108,7 @@ export default function Home() {
           <h1 className="font-bold text-3xl py-6">Hot discounts</h1>
         </div>
 
-        <Carusel />
+        <MultiItemCarousel products={products} />
       </div>
     </main>
   );
