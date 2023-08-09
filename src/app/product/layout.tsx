@@ -8,7 +8,7 @@ export default function ProductLayout({
 }) {
   return (
     <div>
-      ProductLayout
+      {/* ProductLayout */}
       <Suspense fallback={<Loading />}>{children}</Suspense>
     </div>
   );
