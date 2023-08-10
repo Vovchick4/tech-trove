@@ -6,11 +6,11 @@ import { useState } from 'react';
 
 export default function Product() {
   const initialCheckboxData = [
-    { label: 'Check 1', checked: false },
-    { label: 'Check 2', checked: false },
-    { label: 'Check 3', checked: false },
-    { label: 'Check 4', checked: false },
-    { label: 'Check 5', checked: false },
+    { label: 'Xiaomi', checked: false },
+    { label: 'Samsung', checked: false },
+    { label: 'Nokia', checked: false },
+    { label: 'Apple', checked: false },
+    { label: 'Poco', checked: false },
   ];
 
   const handleCheckboxChange = (index: number) => (checked: boolean) => {
@@ -89,9 +89,9 @@ export default function Product() {
         </div>
       </div>
       <div className="flex flex-col sm:flex-row">
-        <div className="flex-none flex-col px-3">
+        <div className="flex-none flex-col px-3 sm:w-1/6">
           <div className="hs-accordion-group">
-            <div className="hs-accordion active" id="hs-basic-heading-one">
+            <div className="hs-accordion active" id="hs-basic-heading-brands">
               <button
                 className="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
                 aria-controls="hs-basic-collapse-one"
@@ -132,12 +132,12 @@ export default function Product() {
                     stroke-linecap="round"
                   />
                 </svg>
-                Brand
+                <p className="text-2xl">Brands</p>
               </button>
               <div
-                id="hs-basic-collapse-one"
-                className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-                aria-labelledby="hs-basic-heading-one"
+                id="hs-basic-heading-brands"
+                className="hs-accordion-content w-full text-xl overflow-hidden transition-[height] duration-300"
+                aria-labelledby="hs-basic-heading-brands"
               >
                 {checkboxData.map((item, index) => (
                   <Checkbox
@@ -150,7 +150,7 @@ export default function Product() {
               </div>
             </div>
 
-            <div className="hs-accordion" id="hs-basic-heading-three">
+            <div className="hs-accordion" id="hs-basic-heading-price">
               <button
                 className="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
                 aria-controls="hs-basic-collapse-three"
@@ -191,12 +191,12 @@ export default function Product() {
                     stroke-linecap="round"
                   />
                 </svg>
-                Price
+                <p className="text-2xl">Price</p>
               </button>
               <div
-                id="hs-basic-collapse-three"
+                id="hs-basic-heading-price"
                 className="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
-                aria-labelledby="hs-basic-heading-three"
+                aria-labelledby="hs-basic-heading-price"
               >
                 <input
                   id="small-range"
@@ -209,7 +209,7 @@ export default function Product() {
         </div>
 
         {/* <!-- Card Blog --> */}
-        <div className="basic-1/2 max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
+        <div className="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto sm:w-5/6 ">
           <div className="flex flex-col">
             {/* <!-- Grid --> */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
