@@ -12,7 +12,7 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 
 import { Button, Input } from '.';
-import { useTheme } from '@/context/theme-context';
+import { useTheme } from '@/hooks';
 
 export default function Header() {
   const { status } = useSession();

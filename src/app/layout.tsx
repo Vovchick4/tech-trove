@@ -1,12 +1,13 @@
 import './globals.css';
 import { Suspense } from 'react';
+import Script from 'next/script';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
+
 import { Inter } from 'next/font/google';
 
 import Loading from './loading';
-import { ThemeProvider } from '@/context';
-import DynamicScriptComponent from './lib';
+import { ThemeProvider } from './provider';
 import { NextAuthProvider } from '@/providers';
 import { NavBar, OffCanvas, Footer } from '@/components';
 
@@ -28,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className + ' bg-white dark:bg-black'}>
         <ThemeProvider>
           <NextAuthProvider>
@@ -39,7 +40,7 @@ export default function RootLayout({
               <Suspense fallback={<Loading />}>{children}</Suspense>
               <Footer />
             </div>
-            <DynamicScriptComponent />
+            <Script src="./node_modules/preline/dist/preline.js" />
           </NextAuthProvider>
         </ThemeProvider>
       </body>
