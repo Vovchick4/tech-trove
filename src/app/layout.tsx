@@ -6,7 +6,6 @@ import type { Metadata } from 'next';
 
 import { Inter } from 'next/font/google';
 
-import Loading from './loading';
 import { ThemeProvider } from './provider';
 import { NextAuthProvider } from '@/providers';
 import { NavBar, OffCanvas, Footer } from '@/components';
@@ -37,7 +36,7 @@ export default function RootLayout({
               <HeaderDynamic />
               <NavBar />
               <OffCanvas />
-              <Suspense fallback={<Loading />}>{children}</Suspense>
+              {children}
               <Footer />
             </div>
             <Script src="./node_modules/preline/dist/preline.js" />

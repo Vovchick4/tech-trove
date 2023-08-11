@@ -55,9 +55,13 @@ const fetchProduct = async () => {
   const products: CardProps[] = await setToCache(
     'products',
     async () =>
-      await (
-        await fetch('http://localhost:3000/api/products', { cache: 'no-cache' })
-      ).json()
+      (
+        await (
+          await fetch('http://localhost:3000/api/products', {
+            cache: 'no-cache',
+          })
+        ).json()
+      ).products
   );
   return products;
 };
