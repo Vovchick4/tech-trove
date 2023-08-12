@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
         const sub_categories_ids: any = request.nextUrl.searchParams.get("sub_categories_ids");
 
         const filterOps = {
-            categories: { some: { sub_categories: { some: { id: { in: new Array(sub_categories_ids) } } } } },
+            categories: { some: { sub_categories: { some: { slug: { in: new Array(sub_categories_ids) } } } } },
             include: { categories: { include: { sub_categories: true } } },
         }
 

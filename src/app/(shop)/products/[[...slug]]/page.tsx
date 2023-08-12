@@ -1,8 +1,5 @@
-import { Suspense } from 'react';
-import Image from 'next/image';
-
-import { Spinner } from '@/components';
-import { CardProps } from '@/components/product-card';
+import { Fragment } from 'react';
+import ProductCard, { CardProps } from '@/components/product-card';
 
 export interface IProductsPageProps {
   params: {
@@ -27,26 +24,15 @@ export default async function Products({
   const products = await getProducts(slug);
 
   return (
-    <div>
+    <Fragment>
       {products && (
-        <ul>
-          {products.map(({ name, preview }, i) => (
-            <li key={i}>
-              {name}
-              <Suspense fallback={<Spinner />}>
-                <Image
-                  loading="lazy"
-                  width={400}
-                  height={400}
-                  src={preview}
-                  alt={name}
-                />
-              </Suspense>
-            </li>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 col-span-2">
+          {products.map((product) => (
+            <ProductCard key={product.slug} {...product} />
           ))}
-        </ul>
+        </div>
       )}
       {!products && <p>No products for {JSON.stringify(slug)}</p>}
-    </div>
+    </Fragment>
   );
 }

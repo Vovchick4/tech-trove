@@ -1,11 +1,10 @@
 import './globals.css';
-import { Suspense } from 'react';
-import Script from 'next/script';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 
 import { Inter } from 'next/font/google';
 
+import DynamicScriptComponent from './lib';
 import { ThemeProvider } from './provider';
 import { NextAuthProvider } from '@/providers';
 import { NavBar, OffCanvas, Footer } from '@/components';
@@ -39,7 +38,7 @@ export default function RootLayout({
               {children}
               <Footer />
             </div>
-            <Script src="./node_modules/preline/dist/preline.js" />
+            <DynamicScriptComponent />
           </NextAuthProvider>
         </ThemeProvider>
       </body>

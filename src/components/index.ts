@@ -1,3 +1,5 @@
+export { default as Accardion } from './accardion';
+export { default as CheckBox } from './checkbox';
 export { default as Spinner } from './spinner';
 export { default as Button } from './button';
 export { default as Input } from './input';

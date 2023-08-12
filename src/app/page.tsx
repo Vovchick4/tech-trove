@@ -9,6 +9,8 @@ import ConsoleImage from '../../public/Console-image-category.jpg';
 import AccessoriesImage from '../../public/Accessories-image-category.jpg';
 import ControllersImage from '../../public/Controllers-image-category.jpg';
 
+export const runtime = 'edge';
+
 export default async function Home() {
   return (
     <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
