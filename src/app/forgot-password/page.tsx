@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Button, Input } from '@/components';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -34,12 +35,12 @@ export default function ForgotPassword() {
             </h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               Remember your password?
-              <a
+              <Link
                 className="text-blue-600 decoration-2 hover:underline font-medium"
-                href="../examples/html/signin.html"
+                href="/login"
               >
-                {" "}Sign in here
-              </a>
+                Sign in here
+              </Link>
             </p>
           </div>
 

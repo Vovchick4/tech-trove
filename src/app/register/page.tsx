@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,6 +28,7 @@ const schema = yup.object({
 });
 
 export default function Register() {
+  const [isSubmiting, setIsSubmiting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -35,7 +37,25 @@ export default function Register() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<IRegisterData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<IRegisterData> = async (data, e) => {
+    e?.preventDefault();
+    try {
+      setIsSubmiting(true);
+
+      const res = await fetch('http://localhost:3000/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        cache: 'no-cache',
+      });
+      const json = await res.json();
+
+      alert(json?.message);
+    } catch (error) {
+      console.log('🚀 ~ file: page.tsx:44 ~ Register ~ error:', error);
+    } finally {
+      setIsSubmiting(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-md mx-auto p-6">
@@ -83,12 +103,18 @@ export default function Register() {
                     />
                   </div>
                 </div>
-
                 <div>
                   <Input.Password
                     useFormHelper={{ ...register('password') }}
                     label="Password"
                     error={errors.password?.message}
+                  />
+                </div>
+                <div>
+                  <Input.Password
+                    useFormHelper={{ ...register('confirm_password') }}
+                    label="Confirm Password"
+                    error={errors.confirm_password?.message}
                   />
                 </div>
                 <div className="flex items-center">
@@ -99,6 +125,7 @@ export default function Register() {
                 </div>
 
                 <Button
+                  isLoading={isSubmiting}
                   type="submit"
                   className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                 >

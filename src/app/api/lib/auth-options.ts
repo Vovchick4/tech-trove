@@ -8,7 +8,9 @@ import { prisma } from "../lib/prisma-client";
 export const authOptions: NextAuthOptions = {
     pages: {
         signIn: "/login",
+        error: "/login"
     },
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
     },

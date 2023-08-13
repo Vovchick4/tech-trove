@@ -2,8 +2,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
+import { ImExit } from 'react-icons/im';
 import { GiMoon } from 'react-icons/gi';
 import { CiLogin } from 'react-icons/ci';
 import { FaOpencart } from 'react-icons/fa';
@@ -11,13 +13,12 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 
-import { Button, Input } from '.';
+import { Button, Input, Spinner } from '.';
 import { useTheme } from '@/context/theme-context';
-import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const router = useRouter();
-  const { status } = useSession();
+  const { status, data } = useSession();
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -93,71 +94,85 @@ export default function Header() {
             >
               <FaOpencart size={18} />
             </Button>
+            {status === 'loading' && <Spinner />}
 
-            {status === 'authenticated' ? (
-              <div
-                className="hs-dropdown relative inline-flex"
-                data-hs-dropdown-placement="bottom-right"
-              >
-                <Button
-                  id="hs-dropdown-default"
-                  style={{ padding: 0 }}
-                  className="hs-dropdown-toggle h-[2.375rem] w-[2.375rem]"
-                  color="blackedOpacity"
-                  roundedFull
-                >
-                  <Image
-                    width={200}
-                    height={200}
-                    className="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white dark:ring-gray-800"
-                    src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
-                    alt="DropImage"
-                  />
-                </Button>
-
+            {status !== 'loading' &&
+              (status === 'authenticated' ? (
                 <div
-                  className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] z-10 bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700"
-                  aria-labelledby="hs-dropdown-with-header"
+                  className="hs-dropdown relative inline-flex"
+                  data-hs-dropdown-placement="bottom-right"
                 >
-                  <div className="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Signed in as
-                    </p>
-                    <p className="text-sm font-medium text-gray-800 dark:text-gray-300">
-                      james@site.com
-                    </p>
-                  </div>
-                  <div className="mt-2 py-2 first:pt-0 last:pb-0">
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                      href="#"
-                    >
-                      <BiSolidUserAccount size={18} />
-                      Account
-                    </a>
-                  </div>
-                  <div className="mt-2 py-2 first:pt-0 last:pb-0">
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                      href="#"
-                    >
-                      <BiPurchaseTag size={18} />
-                      Purchases
-                    </a>
+                  <Button
+                    id="hs-dropdown-default"
+                    style={{ padding: 0 }}
+                    className="hs-dropdown-toggle h-[2.375rem] w-[2.375rem]"
+                    color="blackedOpacity"
+                    roundedFull
+                  >
+                    <Image
+                      width={200}
+                      height={200}
+                      className="inline-block h-[2.375rem] w-[2.375rem] rounded-full ring-2 ring-white dark:ring-gray-800"
+                      src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+                      alt="DropImage"
+                    />
+                  </Button>
+
+                  <div
+                    className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] z-10 bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700"
+                    aria-labelledby="hs-dropdown-with-header"
+                  >
+                    <div className="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Signed in as
+                      </p>
+                      <p className="text-sm font-medium text-gray-800 dark:text-gray-300">
+                        {data.session.user?.email}
+                      </p>
+                    </div>
+                    <div className="mt-2 py-2 first:pt-0 last:pb-0">
+                      <a
+                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                        href="#"
+                      >
+                        <BiSolidUserAccount size={18} />
+                        Account
+                      </a>
+                    </div>
+                    <div className="mt-2 py-2 first:pt-0 last:pb-0">
+                      <a
+                        className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                        href="#"
+                      >
+                        <BiPurchaseTag size={18} />
+                        Purchases
+                      </a>
+                    </div>
+                    <div className="mt-2 py-2 first:pt-0 last:pb-0">
+                      <Button
+                        style={{ justifyContent: 'flex-start' }}
+                        fullWidth
+                        color="blacked"
+                        variant="ghost"
+                        leftIcon={<ImExit size={18} />}
+                        onClick={async () => await signOut()}
+                      >
+                        LogOut
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <Button
-                style={{ padding: 0 }}
-                className="h-[2.375rem] w-[2.375rem]"
-                color="blackedOpacity"
-                roundedFull
-                onClick={()=> router.push('/login')}
-              >
-                <CiLogin size={18} />
-              </Button>
-            )}
+              ) : (
+                <Button
+                  style={{ padding: 0 }}
+                  className="h-[2.375rem] w-[2.375rem]"
+                  color="blackedOpacity"
+                  roundedFull
+                  onClick={() => router.push('/login')}
+                >
+                  <CiLogin size={18} />
+                </Button>
+              ))}
           </div>
         </div>
       </nav>

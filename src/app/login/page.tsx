@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import * as yup from 'yup';
+import { signIn, useSession } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { FcGoogle } from 'react-icons/fc';
@@ -22,6 +24,7 @@ const schema = yup.object({
 });
 
 export default function Login() {
+  const [isSubmiting, setIsSubmiting] = useState(false);
   const {
     register,
     handleSubmit,
@@ -30,10 +33,33 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<ILoginData> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<ILoginData> = async (data, e) => {
+    e?.preventDefault();
+    try {
+      setIsSubmiting(true);
+      const reposnse = await signIn('credentials', {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        callbackUrl: '/',
+      });
+
+      console.log(reposnse);
+    } catch (error) {
+      console.log(
+        '🚀 ~ file: page.tsx:46 ~ constonSubmit:SubmitHandler<ILoginData>= ~ error:',
+        error
+      );
+    } finally {
+      setIsSubmiting(false);
+    }
+  };
+
+  const session = useSession();
 
   return (
     <div className="w-full max-w-md mx-auto p-6">
+      {JSON.stringify(session)}
       <div className="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <div className="p-4 sm:p-7">
           <div className="text-center">
@@ -46,7 +72,8 @@ export default function Login() {
                 className="text-blue-600 decoration-2 hover:underline font-medium"
                 href="/register"
               >
-                {" "}Sign up here
+                {' '}
+                Sign up here
               </Link>
             </p>
           </div>
@@ -67,7 +94,7 @@ export default function Login() {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid gap-y-4">
+              <div className="grid gap-y-2">
                 <Input
                   useFormHelper={{ ...register('email') }}
                   label="Enter email"
@@ -96,6 +123,7 @@ export default function Login() {
 
                 <Button
                   type="submit"
+                  isLoading={isSubmiting || session.status === 'loading'}
                 >
                   Sign in
                 </Button>
