@@ -1,12 +1,12 @@
 import './globals.css';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
-
 import { Inter } from 'next/font/google';
 
 import DynamicScriptComponent from './lib';
-import { ThemeProvider } from './provider';
+import { ThemeProvider } from '@/providers';
 import { NextAuthProvider } from '@/providers';
+import { ProggressRouterEvent } from '@/events';
 import { NavBar, OffCanvas, Footer } from '@/components';
 
 const HeaderDynamic = dynamic(() => import('@/components/header'), {
@@ -31,6 +31,7 @@ export default function RootLayout({
       <body className={inter.className + ' bg-white dark:bg-black'}>
         <ThemeProvider>
           <NextAuthProvider>
+            <ProggressRouterEvent />
             <div className={'flex flex-col justify-between min-h-screen'}>
               <HeaderDynamic />
               <NavBar />
