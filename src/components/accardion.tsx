@@ -7,20 +7,22 @@ import { Button } from '.';
 export interface IAccardion {
   title: string;
   list: any[];
-  renderLabelList: (item: any) => any;
+  RenderLabelList: (item: any) => any;
 }
 
 export default function Accardion({
   title,
   list,
-  renderLabelList,
+  RenderLabelList,
 }: IAccardion) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const styles = useMemo(() => {
     const classes: string[] = [];
 
     if (!isOpen) {
-      classes.push('h-0');
+      classes.push('h-0 opacity-20');
+    } else {
+      classes.push('opacity-100');
     }
 
     return classes.join(' ');
@@ -54,14 +56,14 @@ export default function Accardion({
       <ul
         style={isOpen ? { height: list.length * 48 } : {}}
         className={
-          'w-full overflow-hidden transition-[height] duration-300 bg-gray-900 last:rounded-b-lg' +
+          'w-full overflow-hidden transition-all duration-300 ease-in-out bg-gray-900 last:rounded-b-lg' +
           ' ' +
           styles
         }
       >
         {list.map((item, i) => (
           <li key={i} className="px-4 py-3 pl-8 text-sm">
-            {renderLabelList(item)}
+            {<RenderLabelList {...item} />}
           </li>
         ))}
       </ul>

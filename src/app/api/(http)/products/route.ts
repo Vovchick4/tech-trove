@@ -18,23 +18,31 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
     try {
-        const sub_categories_ids: any = request.nextUrl.searchParams.get("sub_categories_ids");
+        const categories_slug: any = request.nextUrl.searchParams.get("categories_slug");
 
         const filterOps = {
-            categories: { some: { sub_categories: { some: { slug: { in: new Array(sub_categories_ids) } } } } },
-            include: { categories: { include: { sub_categories: true } } },
+            include: { categories: true, child_categories: true },
         }
 
         let finded: any = await prisma.product.findMany({ orderBy: { name: "asc" }, include: filterOps.include });
-        if (!sub_categories_ids) {
+        if (!categories_slug) {
             return NextResponse.json({ products: finded, message: "200 OK!" });
-        }
+        } else if (categories_slug.split(",").length === 1) {
+            console.log(categories_slug.split(",").length);
 
-        finded = await prisma.product.findMany({ orderBy: { name: "asc" }, where: { categories: filterOps.categories }, include: filterOps.include });
-        if (finded) {
-            return NextResponse.json({ products: finded, message: "200 OK!" });
+            finded = await prisma.product.findMany({ orderBy: { name: "asc" }, where: { categories: { some: { slug: { equals: categories_slug } } } }, include: filterOps.include });
+            if (finded) {
+                return NextResponse.json({ products: finded, message: "200 OK!" });
+            } else {
+                return NextResponse.json({ products: [], message: "Not found products!" });
+            }
         } else {
-            return NextResponse.json({ products: [], message: "Not found products!" });
+            finded = await prisma.product.findMany({ orderBy: { name: "asc" }, where: { child_categories: { some: { slug: { in: categories_slug.split(",") } } } }, include: filterOps.include });
+            if (finded) {
+                return NextResponse.json({ products: finded, message: "200 OK!" });
+            } else {
+                return NextResponse.json({ products: [], message: "Not found products!" });
+            }
         }
     } catch (error) {
         return NextResponse.json({ error: 'Error fetching data' });

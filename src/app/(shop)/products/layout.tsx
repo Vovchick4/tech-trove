@@ -16,7 +16,7 @@ export default function Layout({ children }: IProductsLayoutProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <Header />
-      <div className="grid md:grid-cols-[270px_minmax(900px,_1fr)_100px] gap-4">
+      <div className="grid md:grid-cols-[250px_minmax(900px,_1fr)] gap-4">
         <FilterSection />
         <Suspense fallback={<Loading />}>{children}</Suspense>
       </div>

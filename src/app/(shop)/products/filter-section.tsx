@@ -1,39 +1,32 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import useSWR, { Fetcher } from 'swr';
+
 import Loading from './loading';
 import { Accardion, CheckBox } from '@/components';
-import setToCache from '@/app/lib/cache';
 
-const getCategories = async () => {
-  return setToCache(
-    'categories',
-    async () =>
-      await (await fetch('http://localhost:3000/api/categories')).json()
-  );
-};
+export interface IFilterData {
+  name: string;
+  slug: string;
+  sub_categories: any[];
+}
+
+const fetcher: Fetcher<IFilterData[], string> = (...args) =>
+  fetch(...args).then(async (res) => (await res.json()).categories);
 
 export default function FilterSection() {
   const router = useRouter();
   const { slug } = useParams();
 
-  const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
+  const { data: categories, isLoading } = useSWR(
+    slug !== undefined && typeof slug[0] === 'string'
+      ? `/api/categories?category_slug=${slug[0]}`
+      : '/api/categories',
+    fetcher
+  );
 
-  useEffect(() => {
-    setLoading(false);
-    try {
-      (async () => {
-        setCategories((await getCategories()).categories);
-      })();
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <Loading.ListOfFilter />;
   }
 
@@ -45,19 +38,24 @@ export default function FilterSection() {
             key={slugg}
             title={name}
             list={sub_categories}
-            renderLabelList={(item) => (
-              <CheckBox
-                title={item.name}
-                isActive={slug?.includes(item.slug)}
-                handlerClick={() =>
-                  router.push(
-                    !slug
-                      ? '/products/' + item.slug
-                      : '/products/' + (slug as string[]).join('/')
-                  )
-                }
-              />
-            )}
+            RenderLabelList={(item) => {
+              return (
+                <CheckBox
+                  title={item.name}
+                  isActive={slug?.includes(item.slug)}
+                  handlerClick={() => {
+                    let href = !slug
+                      ? '/' + slugg + '/' + item.slug
+                      : (slug as string[]).find((s) => s === item.slug)
+                      ? (slug as string[])
+                          .filter((s) => s !== item.slug)
+                          .join('/')
+                      : [...(slug as string[]), item.slug].join('/');
+                    router.replace(`/products/${href}`);
+                  }}
+                />
+              );
+            }}
           />
         ))}
     </div>

@@ -11,7 +11,7 @@ const getProducts = async (params: string | string[]) => {
   let url = 'http://localhost:3000/api/products';
 
   if (params !== undefined) {
-    url += `?sub_categories_ids=${params}`;
+    url += `?categories_slug=${params}`;
   }
 
   return (await (await fetch(url, { cache: 'no-cache' })).json())
@@ -26,7 +26,7 @@ export default async function Products({
   return (
     <Fragment>
       {products && (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 col-span-2">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 col-span-1">
           {products.map((product) => (
             <ProductCard key={product.slug} {...product} />
           ))}

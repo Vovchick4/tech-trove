@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Product {
-    id             String         @id @default(uuid()) @map("_id") @db.ObjectId
-    name           String
-    slug           String
-    preview        String
-    categories_ids String[]       @db.ObjectId
-    categories     MainCategory[] @relation(fields: [categories_ids], references: [id])
+    id                   String         @id @default(uuid()) @map("_id") @db.ObjectId
+    name                 String
+    slug                 String
+    preview              String
+    categories_ids       String[]       @db.ObjectId
+    categories           MainCategory[] @relation(fields: [categories_ids], references: [id])
+    child_categories_ids String[]       @db.ObjectId
+    child_categories     SubCategory[]  @relation(fields: [child_categories_ids], references: [id])
 }
 
 model MainCategory {
@@ -34,6 +36,8 @@ model SubCategory {
     slug          String
     parent_id     String       @map("parent_id") @db.ObjectId
     main_category MainCategory @relation(fields: [parent_id], references: [id])
+    product_ids   String[]     @default([]) @db.ObjectId
+    products      Product[]    @relation(fields: [product_ids], references: [id])
 }
 
 model User {
