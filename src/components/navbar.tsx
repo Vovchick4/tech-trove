@@ -8,7 +8,6 @@ import ContentLoader from 'react-content-loader';
 
 export default function Navbar() {
   const pathname = usePathname();
-  console.log('🚀 ~ file: navbar.tsx:11 ~ Navbar ~ pathname:', pathname);
   const { slug: slugs } = useParams();
   const { data: categories, isLoading } = useSWR('/api/categories', (...args) =>
     fetch(...args).then(async (res) => (await res.json()).categories)

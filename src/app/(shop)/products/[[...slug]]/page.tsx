@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import ProductCard, { CardProps } from '@/components/product-card';
+import { ProductWrapper } from '@/components';
 
 export interface IProductsPageProps {
   params: {
@@ -27,9 +28,7 @@ export default async function Products({
     <Fragment>
       {products && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 col-span-1">
-          {products.map((product) => (
-            <ProductCard key={product.slug} {...product} />
-          ))}
+          <ProductWrapper products={products} />
         </div>
       )}
       {!products && <p>No products for {JSON.stringify(slug)}</p>}

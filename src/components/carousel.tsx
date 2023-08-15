@@ -1,11 +1,12 @@
 'use client';
 
-import React, { use } from 'react';
-import Slider from 'react-slick';
-import ProductCard, { CardProps } from './product-card';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import React, { use } from 'react';
+import Slider from 'react-slick';
 import setToCache from '@/app/lib/cache';
+import { useCart } from '@/context/cart-context';
+import ProductCard, { CardProps } from './product-card';
 
 const settings = {
   dots: true,
@@ -67,6 +68,7 @@ const fetchProduct = async () => {
 };
 
 export default function MultiItemCarousel({}: {}) {
+  const { addToCart } = useCart();
   const products = use(fetchProduct());
 
   return (
@@ -74,12 +76,7 @@ export default function MultiItemCarousel({}: {}) {
       {products &&
         products.map((product, index) => (
           <div key={index} className="px-2">
-            <ProductCard
-              name={product.name}
-              describe={product.describe}
-              price={product.price}
-              slug={product.slug}
-            />
+            <ProductCard {...product} addToCart={addToCart} />
           </div>
         ))}
     </Slider>

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import { GiMoon } from 'react-icons/gi';
@@ -13,9 +14,12 @@ import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 
 import { Button, Input } from '.';
 import { useTheme } from '@/hooks';
+import { useCart } from '@/context/cart-context';
 
 export default function Header() {
+  const router = useRouter();
   const { status } = useSession();
+  const { cart } = useCart();
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -84,12 +88,18 @@ export default function Header() {
             </Button>
 
             <Button
+              onClick={() => router.push('/cart')}
               style={{ padding: 0 }}
-              className="h-[2.375rem] w-[2.375rem]"
+              className="relative h-[2.375rem] w-[2.375rem]"
               color="blackedOpacity"
               roundedFull
             >
               <FaOpencart size={18} />
+              {cart.length !== 0 && (
+                <div className="absolute -top-2 right-0 w-5 h-5 text-sm rounded-full text-white bg-black dark:text-black dark:bg-white">
+                  {cart.length}
+                </div>
+              )}
             </Button>
 
             {status === 'authenticated' ? (

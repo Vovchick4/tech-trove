@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
 import DynamicScriptComponent from './lib';
-import { ThemeProvider } from '@/providers';
+import { CartProvider, ThemeProvider } from '@/providers';
 import { NextAuthProvider } from '@/providers';
 import { ProggressRouterEvent } from '@/events';
 import { NavBar, OffCanvas, Footer } from '@/components';
@@ -31,14 +31,16 @@ export default function RootLayout({
       <body className={inter.className + ' bg-white dark:bg-black'}>
         <ThemeProvider>
           <NextAuthProvider>
-            <ProggressRouterEvent />
-            <div className={'flex flex-col justify-between min-h-screen'}>
-              <HeaderDynamic />
-              <NavBar />
-              <OffCanvas />
-              {children}
-              <Footer />
-            </div>
+            <CartProvider>
+              <ProggressRouterEvent />
+              <div className={'flex flex-col justify-between min-h-screen'}>
+                <HeaderDynamic />
+                <NavBar />
+                <OffCanvas />
+                {children}
+                <Footer />
+              </div>
+            </CartProvider>
             <DynamicScriptComponent />
           </NextAuthProvider>
         </ThemeProvider>

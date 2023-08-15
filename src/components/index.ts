@@ -9,3 +9,4 @@ export { default as Header } from './header';
 export { default as NavBar } from './navbar';
 export { default as OffCanvas } from './offcanvas';
 export { default as ProductCard } from './product-card';
+export { default as ProductWrapper } from './product-wrapper';
