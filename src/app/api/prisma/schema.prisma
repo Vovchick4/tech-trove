@@ -15,6 +15,8 @@ model Product {
     name                 String
     slug                 String
     preview              String
+    describe             String
+    price                String
     categories_ids       String[]       @db.ObjectId
     categories           MainCategory[] @relation(fields: [categories_ids], references: [id])
     child_categories_ids String[]       @db.ObjectId
