@@ -23,7 +23,7 @@ export default async function Home() {
           <div className="flex justify-center w-300 min-w-250">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/console'}
             >
               <Image
                 className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
@@ -41,7 +41,7 @@ export default async function Home() {
           <div className="flex justify-center w-300 min-w-250">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/pc'}
             >
               <Image
                 className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
@@ -59,7 +59,7 @@ export default async function Home() {
           <div className="flex justify-center w-300 min-w-250">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/accessories'}
             >
               <Image
                 className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
@@ -77,7 +77,7 @@ export default async function Home() {
           <div className="flex justify-center w-300 min-w-250">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/controllers'}
             >
               <Image
                 className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
