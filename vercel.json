@@ -1,0 +1,6 @@
+{
+  "framework": "nextjs",
+  "devCommand": "next dev",
+  "buildCommand": "npx prisma generate next build",
+  "outputDirectory": "dist"
+}
