@@ -41,7 +41,7 @@ export default function ProductCard({
         <p className="block mb-1 text-xl font-semibold text-blue-600 dark:text-blue-500">
           Price: {price}$
         </p>
-        <p className="mt-3 text-gray-500">{describe}</p>
+        {/* <p className="mt-3 text-gray-500">{describe}</p> */}
       </div>
       <div className="mt-auto flex border-t border-gray-200 divide-x divide-gray-200 dark:border-gray-700 dark:divide-gray-700">
         <Link
