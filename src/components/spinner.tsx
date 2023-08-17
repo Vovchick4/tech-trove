@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Spinner() {
+export interface ISpinnser {
+  text?: string;
+}
+
+export default function Spinner({ text = 'Loading' }: ISpinnser) {
   return (
     <React.Fragment>
       <span
@@ -8,7 +12,9 @@ export default function Spinner() {
         role="status"
         aria-label="loading"
       ></span>
-      <span className="ml-2 text-bg-slate-800 dark:text-white">Loading</span>
+      {text && (
+        <span className="ml-2 text-bg-slate-800 dark:text-white">{text}</span>
+      )}
     </React.Fragment>
   );
 }

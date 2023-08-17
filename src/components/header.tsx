@@ -12,14 +12,15 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 
-import { Button, Input } from '.';
 import { useTheme } from '@/hooks';
+import { AutoComplate, Button } from '.';
 import { useCart } from '@/context/cart-context';
+import { Fragment } from 'react';
 
 export default function Header() {
   const router = useRouter();
-  const { status } = useSession();
   const { cart } = useCart();
+  const { status } = useSession();
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -51,17 +52,42 @@ export default function Header() {
           </div>
 
           <div className="hidden sm:block">
-            <Input
-              type="text"
-              roundedFull
-              placeholder="Search"
-              isValidIcons={false}
-              leftIcon={
-                <AiOutlineSearch
-                  size={20}
-                  color={!isDark ? 'black' : 'white'}
-                />
+            <AutoComplate
+              fetcher={(...arg) =>
+                fetch(...arg).then(async (res) => (await res.json()).result)
               }
+              RenderOptions={({ name, data }) => (
+                <Fragment>
+                  {data && data.length !== 0 && (
+                    <Fragment>
+                      <p className="p-2 text-md font-bold">{name}</p>
+                      <hr className="border-slate-300" />
+
+                      <ul>
+                        {data.map(({ name: label, slug }: any) => (
+                          <Button
+                            key={slug}
+                            fullWidth
+                            color="blackedOpacity"
+                            variant="ghost"
+                            size="small"
+                            style={{ justifyContent: 'flex-start' }}
+                            onClick={() => {
+                              if (name === 'Category') {
+                                router.push(`/products/${slug}`);
+                              } else if (name === 'Product') {
+                                router.push(`/product-info/${slug}`);
+                              }
+                            }}
+                          >
+                            {label}
+                          </Button>
+                        ))}
+                      </ul>
+                    </Fragment>
+                  )}
+                </Fragment>
+              )}
             />
           </div>
 
@@ -77,7 +103,6 @@ export default function Header() {
             >
               {isDark ? <BiSun size={22} /> : <GiMoon size={22} />}
             </Button>
-
             <Button
               style={{ padding: 0 }}
               className="h-[2.375rem] w-[2.375rem]"
@@ -86,7 +111,6 @@ export default function Header() {
             >
               <IoMdNotificationsOutline size={22} />
             </Button>
-
             <Button
               onClick={() => router.push('/cart')}
               style={{ padding: 0 }}
@@ -101,7 +125,6 @@ export default function Header() {
                 </div>
               )}
             </Button>
-
             {status === 'authenticated' ? (
               <div
                 className="hs-dropdown relative inline-flex"
