@@ -77,12 +77,13 @@ export default async function ProductInfo({
             </h3>
             <p className="text-gray-400">
               • Модель процесора: Intel 8-Core i7-10700F 2.9-4.8GHz ; •
-              Відеокарта: GeForce RTX 3070 8GB ; • Оперативна пам'ять: 32GB
-              DDR4-3200 Gaming ; • Об'єм накопичувача: 1TB NVMe SSD ; • Об'єм
-              другого накопичувача: – ; • Охолодження процесора: Enermax T40 ; •
-              Чіпсет мат. плати: Intel® B460 ; • Модель материнської плати:
-              PRIME B460M-A ; • Корпус: QUBE BREEZE ARGB ; • Блок живлення: 700W
-              80+ Bronze ; • Операційна система: No OS ;{describe}
+              Відеокарта: GeForce RTX 3070 8GB ; • Оперативна пам&apos;ять: 32GB
+              DDR4-3200 Gaming ; • Об&apos;єм накопичувача: 1TB NVMe SSD ; •
+              Об&apos;єм другого накопичувача: – ; • Охолодження процесора:
+              Enermax T40 ; • Чіпсет мат. плати: Intel® B460 ; • Модель
+              материнської плати: PRIME B460M-A ; • Корпус: QUBE BREEZE ARGB ; •
+              Блок живлення: 700W 80+ Bronze ; • Операційна система: No OS ;
+              {describe}
             </p>
           </div>
         </div>

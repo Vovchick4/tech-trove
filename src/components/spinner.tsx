@@ -8,7 +8,7 @@ export default function Spinner({ text = 'Loading' }: ISpinnser) {
   return (
     <React.Fragment>
       <span
-        className="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-bg-slate-800 dark:text-white rounded-full"
+        className="animate-spin inline-block w-4 h-4 border-[3px] border-current border-t-transparent text-slate-800 dark:text-white rounded-full"
         role="status"
         aria-label="loading"
       ></span>

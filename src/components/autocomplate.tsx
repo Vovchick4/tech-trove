@@ -79,7 +79,7 @@ export default function Autocomplate<T>({
       />
 
       <ul
-        className={`absolute top-12 left-0 right-0 rounded-lg bg-slate-800 transition-all duration-300 ${classes}`}
+        className={`absolute top-12 left-0 right-0 rounded-lg bg-white dark:bg-slate-800 transition-all duration-300 ${classes}`}
       >
         {error && <p>{error}</p>}
         {data &&

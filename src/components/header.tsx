@@ -60,7 +60,9 @@ export default function Header() {
                 <Fragment>
                   {data && data.length !== 0 && (
                     <Fragment>
-                      <p className="p-2 text-md font-bold">{name}</p>
+                      <p className="p-2 text-md font-bold text-black dark:text-white">
+                        {name}
+                      </p>
                       <hr className="border-slate-300" />
 
                       <ul>
