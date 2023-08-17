@@ -2,9 +2,9 @@
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import React, { use } from 'react';
+import React from 'react';
+import useSWR, { Fetcher } from 'swr';
 import Slider from 'react-slick';
-import setToCache from '@/app/lib/cache';
 import { useCart } from '@/context/cart-context';
 import ProductCard, { CardProps } from './product-card';
 
@@ -52,24 +52,13 @@ const settings = {
   ],
 };
 
-const fetchProduct = async () => {
-  const products: CardProps[] = await setToCache(
-    'products',
-    async () =>
-      (
-        await (
-          await fetch('http://localhost:3000/api/products', {
-            cache: 'no-cache',
-          })
-        ).json()
-      ).products
-  );
-  return products;
-};
+const fetchProduct: Fetcher<CardProps[], string> = async (...arg) =>
+  (await (await fetch(...arg)).json()).products;
 
 export default function MultiItemCarousel({}: {}) {
   const { addToCart } = useCart();
-  const products = use(fetchProduct());
+
+  const { data: products } = useSWR('/api/products', fetchProduct);
 
   return (
     <Slider {...settings}>

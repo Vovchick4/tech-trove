@@ -9,7 +9,7 @@ export interface IProductsPageProps {
 }
 
 const getProducts = async (params: string | string[]) => {
-  let url = 'http://localhost:3000/api/products';
+  let url = `${process.env.API_URL}/api/products`;
 
   if (params !== undefined) {
     url += `?categories_slug=${params}`;

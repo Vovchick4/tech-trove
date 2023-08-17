@@ -9,7 +9,7 @@ async function getData(slug: string) {
     slug,
     async () =>
       await (
-        await fetch(`http://localhost:3000/api/products?slug=${slug}`, {
+        await fetch(`${process.env.API_URL}/api/products?slug=${slug}`, {
           cache: 'no-cache',
         })
       ).json()
