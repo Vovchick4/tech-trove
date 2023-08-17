@@ -24,16 +24,23 @@ export default async function ProductInfo({
   // price,
   // slug,
   // preview = undefined,
-  // addToCart = () => {},
+  //addToCart = () => {},
   params: { slug },
 }: {
   params: { slug: string };
 }) {
-  const findProduct = await getData(slug);
+  // let findProduct: CardProps = JSON.parse(await getData(slug));
+  let findProduct = await getData(slug);
 
   if (findProduct === null) {
     notFound();
   }
+
+  const targetProduct = findProduct.products.find(
+    (product: { slug: string }) => product.slug === slug
+  );
+
+  const { name, price, describe } = targetProduct;
 
   return (
     <div className="flex flex-col min-h-screen m-6 p-8 rounded-[30px] bg-slate-700">
@@ -45,11 +52,10 @@ export default async function ProductInfo({
         <div className="flex flex-col justify-start">
           <div className="p-4 md:p-6">
             <h3 className="text-3xl font-semibold text-gray-800 dark:text-gray-300 dark:hover:text-white">
-              {slug}
-              {/* {name} */}
+              {name}
             </h3>
             <p className="block mb-1 text-xl font-semibold text-blue-600 dark:text-blue-500">
-              Price: 300 {/* price */}$
+              Price: {price}$
             </p>
             <div className="m-3 ">
               <Button
@@ -58,7 +64,7 @@ export default async function ProductInfo({
                 variant="outline"
                 color="info"
                 // onClick={() =>
-                //   addToCart({ name, describe, price, slug, preview })
+                //   addToCart({ findProduct.name, describe, price, slug, preview })
                 // }
               >
                 Add to Card
@@ -76,29 +82,11 @@ export default async function ProductInfo({
               другого накопичувача: – ; • Охолодження процесора: Enermax T40 ; •
               Чіпсет мат. плати: Intel® B460 ; • Модель материнської плати:
               PRIME B460M-A ; • Корпус: QUBE BREEZE ARGB ; • Блок живлення: 700W
-              80+ Bronze ; • Операційна система: No OS ; {/* describe */}
+              80+ Bronze ; • Операційна система: No OS ;{describe}
             </p>
           </div>
         </div>
       </div>
     </div>
-    // <div>
-    //   ProductInfo {slug}
-    //   <br />
-    //   {JSON.stringify(findProduct)}
-    //   <br />
-    //   <Button type="button" color="danger" size="default" variant="solid">
-    //     Solid btn
-    //   </Button>
-    //   <Button type="button" color="danger" size="default" variant="outline">
-    //     Outline btn
-    //   </Button>
-    //   <Button type="button" color="warning" size="default" variant="ghost">
-    //     Ghost btn
-    //   </Button>
-    //   <Button type="button" color="danger" size="default" variant="soft">
-    //     Soft btn
-    //   </Button>
-    // </div>
   );
 }
