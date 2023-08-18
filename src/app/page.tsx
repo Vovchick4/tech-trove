@@ -19,14 +19,14 @@ export default async function Home() {
           <h1 className="font-bold text-3xl py-6">Shop by category</h1>
         </div>
 
-        <div className=" flex flex-wrap justify-center flex-row p-4 w-full h-full gap-4">
-          <div className="flex justify-center w-300 min-w-250">
+        <div className="flex flex-wrap justify-center flex-row p-4 gap-4">
+          <div className="flex justify-center">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
               href={'/products/console'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={ConsoleImage}
@@ -44,7 +44,7 @@ export default async function Home() {
               href={'/products/pc'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={PCImage}
@@ -62,7 +62,7 @@ export default async function Home() {
               href={'/products/accessories'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={AccessoriesImage}
@@ -80,7 +80,7 @@ export default async function Home() {
               href={'/products/controllers'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={ControllersImage}

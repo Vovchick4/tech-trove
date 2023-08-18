@@ -33,13 +33,11 @@ export default function RootLayout({
           <NextAuthProvider>
             <CartProvider>
               <ProggressRouterEvent />
-              <div className={'flex flex-col justify-between min-h-screen'}>
-                <HeaderDynamic />
-                <NavBar />
-                <OffCanvas />
-                {children}
-                <Footer />
-              </div>
+              <HeaderDynamic />
+              <NavBar />
+              <OffCanvas />
+              {children}
+              <Footer />
             </CartProvider>
             <DynamicScriptComponent />
           </NextAuthProvider>

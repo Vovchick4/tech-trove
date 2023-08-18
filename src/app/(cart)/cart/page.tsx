@@ -1,9 +1,8 @@
 import dynamic from 'next/dynamic';
 
 import { RiSecurePaymentLine } from 'react-icons/ri';
-import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
 
-import { Button, Spinner } from '@/components';
+import { Spinner } from '@/components';
 
 const ItemWrapper = dynamic(() => import('./item-wrapper'), {
   ssr: false,
@@ -12,6 +11,9 @@ const ItemWrapper = dynamic(() => import('./item-wrapper'), {
 const PriceWrapper = dynamic(() => import('./price-wrapper'), {
   ssr: false,
   loading: () => <Spinner />,
+});
+const ModalWrapper = dynamic(() => import('./modal-wrapper'), {
+  ssr: false,
 });
 
 export default function Cart() {
@@ -32,13 +34,7 @@ export default function Cart() {
         </div>
         <hr className="mt-4 mb-6 border-gray-700" />
         <PriceWrapper label="Total:" />
-        <Button
-          color="warning"
-          fullWidth
-          leftIcon={<MdOutlineShoppingCartCheckout size={25} />}
-        >
-          Buy
-        </Button>
+        <ModalWrapper />
         <p className="flex items-center justify-center text-sm mt-2 text-black dark:text-white">
           <RiSecurePaymentLine
             className="text-black dark:text-white mr-2"

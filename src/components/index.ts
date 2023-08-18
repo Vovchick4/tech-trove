@@ -1,5 +1,6 @@
 export { default as Accardion } from './accardion';
 export { default as AutoComplate } from './autocomplate';
+export { default as Modal } from './modal';
 export { default as CheckBox } from './checkbox';
 export { default as Spinner } from './spinner';
 export { default as Button } from './button';
