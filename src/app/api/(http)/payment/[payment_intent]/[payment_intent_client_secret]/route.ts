@@ -6,7 +6,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: '2023-08-16',
 })
 
-export async function POST(request: NextRequest, { params: { payment_intent, payment_intent_client_secret } }: { params: { payment_intent_client_secret: string, payment_intent: string } }) {
+export async function POST(request: NextRequest,
+    { params: { payment_intent, payment_intent_client_secret } }:
+        { params: { payment_intent_client_secret: string, payment_intent: string } }) {
     try {
         if (payment_intent && payment_intent_client_secret) {
             const paymentIntents = await stripe.paymentIntents.retrieve(payment_intent);
