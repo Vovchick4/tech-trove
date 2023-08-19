@@ -9,15 +9,15 @@ import {
 } from 'react';
 
 import { useLocalStorage } from '@/hooks';
-import { CardProps } from '@/components/product-card';
+import { ICardProps } from '@/components/product-card';
 
-export interface ICart extends CardProps {
+export interface ICart extends ICardProps {
   count: number;
 }
 
 export interface ICartContext {
   cart: ICart[];
-  addToCart: (data: CardProps) => void;
+  addToCart: (data: ICardProps) => void;
   removeFromCart: (slug: string) => void;
   increment: (slug: string) => void;
   decrement: (slug: string) => void;
@@ -39,7 +39,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
     setCart(data);
   }, [data, setCart]);
 
-  function addToCart(props: CardProps) {
+  function addToCart(props: ICardProps) {
     if (data.find(({ slug }) => slug === props.slug)) {
       increment(props.slug);
     } else {

@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useState, Fragment } from 'react';
 import PhotoAlbum from 'react-photo-album';
 import Lightbox from 'yet-another-react-lightbox';
 import Slideshow from 'yet-another-react-lightbox/plugins/slideshow';
@@ -13,10 +13,10 @@ import 'yet-another-react-lightbox/plugins/thumbnails.css';
 import slides from '../context/slides';
 
 export default function Gallery() {
-  const [index, setIndex] = React.useState(-1);
+  const [index, setIndex] = useState(-1);
 
   return (
-    <>
+    <Fragment>
       <PhotoAlbum
         layout="rows"
         photos={slides}
@@ -31,6 +31,6 @@ export default function Gallery() {
         open={index >= 0}
         close={() => setIndex(-1)}
       />
-    </>
+    </Fragment>
   );
 }

@@ -1,46 +1,40 @@
+import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
-import { Button } from '@/components';
+
+import { Spinner } from '@/components';
 import setToCache from '@/app/lib/cache';
-import { CardProps } from '@/components/product-card';
 import Gallery from '@/components/image-gallery';
+import { ICardProps } from '@/components/product-card';
+
+const AddToCard = dynamic(() => import('./add-to-card'), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
 
 async function getData(slug: string) {
-  const dataFromCache = await setToCache(
-    slug,
-    async () =>
-      await (
-        await fetch(`${process.env.API_URL}/api/products?slug=${slug}`, {
-          cache: 'no-cache',
-        })
-      ).json()
-  );
+  const dataFromCache = (
+    await (
+      await fetch(`http://localhost:3000/api/products/${slug}`, {
+        cache: 'no-cache',
+      })
+    ).json()
+  ).product;
 
-  return dataFromCache;
+  return dataFromCache as ICardProps;
 }
 
 export default async function ProductInfo({
-  // name,
-  // describe,
-  // price,
-  // slug,
-  // preview = undefined,
-  //addToCart = () => {},
   params: { slug },
 }: {
   params: { slug: string };
 }) {
-  // let findProduct: CardProps = JSON.parse(await getData(slug));
-  let findProduct = await getData(slug);
+  const product = await getData(slug);
 
-  if (findProduct === null) {
+  if (!product && !slug) {
     notFound();
   }
 
-  const targetProduct = findProduct.products.find(
-    (product: { slug: string }) => product.slug === slug
-  );
-
-  const { name, price, describe } = targetProduct;
+  const { name, price, describe } = product;
 
   return (
     <div className="flex flex-col min-h-screen m-6 p-8 rounded-[30px] bg-slate-700">
@@ -57,20 +51,8 @@ export default async function ProductInfo({
             <p className="block mb-1 text-xl font-semibold text-blue-600 dark:text-blue-500">
               Price: {price}$
             </p>
-            <div className="m-3 ">
-              <Button
-                roundedFull
-                fullWidth
-                variant="outline"
-                color="info"
-                // onClick={() =>
-                //   addToCart({ findProduct.name, describe, price, slug, preview })
-                // }
-              >
-                Add to Card
-              </Button>
-            </div>
           </div>
+          <AddToCard {...product} />
           <div className="m-2 p-4 rounded-[30px] bg-slate-800">
             <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-600 dark:hover:text-white">
               About

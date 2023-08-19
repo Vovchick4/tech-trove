@@ -6,7 +6,7 @@ import React from 'react';
 import useSWR, { Fetcher } from 'swr';
 import Slider from 'react-slick';
 import { useCart } from '@/context/cart-context';
-import ProductCard, { CardProps } from './product-card';
+import ProductCard, { ICardProps } from './product-card';
 
 const settings = {
   dots: true,
@@ -52,7 +52,7 @@ const settings = {
   ],
 };
 
-const fetchProduct: Fetcher<CardProps[], string> = async (...arg) =>
+const fetchProduct: Fetcher<ICardProps[], string> = async (...arg) =>
   (await (await fetch(...arg)).json()).products;
 
 export default function MultiItemCarousel({}: {}) {

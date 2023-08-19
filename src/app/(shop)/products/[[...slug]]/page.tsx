@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import ProductCard, { CardProps } from '@/components/product-card';
+import ProductCard, { ICardProps } from '@/components/product-card';
 import { ProductWrapper } from '@/components';
 
 export interface IProductsPageProps {
@@ -16,7 +16,7 @@ const getProducts = async (params: string | string[]) => {
   }
 
   return (await (await fetch(url, { cache: 'no-cache' })).json())
-    .products as CardProps[];
+    .products as ICardProps[];
 };
 
 export default async function Products({

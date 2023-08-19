@@ -2,14 +2,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '.';
 
-export type CardProps = {
+export interface ICardProps {
   name: string;
   describe: string;
   price: number;
   slug: string;
   preview?: string;
-  addToCart?: (data: CardProps) => void;
-};
+  addToCart?: (data: ICardProps) => void;
+}
 
 export default function ProductCard({
   name,
@@ -18,7 +18,7 @@ export default function ProductCard({
   slug,
   preview = undefined,
   addToCart = () => {},
-}: CardProps) {
+}: ICardProps) {
   return (
     <div className="group flex flex-col h-full shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
       <div className="h-52 flex flex-col justify-center items-center bg-blue-600 rounded-t-xl">

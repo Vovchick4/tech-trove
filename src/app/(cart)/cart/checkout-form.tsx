@@ -67,8 +67,9 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
+        receipt_email: email,
         // Make sure to change this to your payment completion page
-        return_url: `${process.env.API_URL}`,
+        return_url: `${process.env.API_URL}/order-invoice`,
       },
     });
 
