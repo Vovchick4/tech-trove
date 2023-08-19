@@ -43,6 +43,14 @@ model SubCategory {
     products      Product[]    @relation(fields: [product_ids], references: [id])
 }
 
+model Order {
+    id             String @id @default(auto()) @map("_id") @db.ObjectId
+    total_price    Float
+    items          Json[]
+    payment_intent String @unique
+    user_email     String
+}
+
 model User {
     id        String   @id @default(uuid()) @map("_id") @db.ObjectId
     createdAt DateTime @default(now())
