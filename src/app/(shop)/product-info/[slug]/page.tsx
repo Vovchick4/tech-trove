@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 
 import { Spinner } from '@/components';
-import setToCache from '@/app/lib/cache';
 import Gallery from '@/components/image-gallery';
 import { ICardProps } from '@/components/product-card';
 
@@ -14,7 +13,7 @@ const AddToCard = dynamic(() => import('./add-to-card'), {
 async function getData(slug: string) {
   const dataFromCache = (
     await (
-      await fetch(`http://localhost:3000/api/products/${slug}`, {
+      await fetch(`${process.env.API_URL}/api/products/${slug}`, {
         cache: 'no-cache',
       })
     ).json()

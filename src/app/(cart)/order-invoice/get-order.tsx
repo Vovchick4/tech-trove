@@ -44,7 +44,7 @@ export default function GetOrder({
     return <Spinner />;
   }
 
-  if (!payment || !payment_intent || !payment_intent_client_secret) {
+  if (!payment_intent || !payment_intent_client_secret) {
     notFound();
   }
 
