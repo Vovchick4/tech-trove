@@ -63,6 +63,10 @@ export default function GetOrder({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart, payment_intent, payment_intent_client_secret, clearCart]);
 
+  if (cart.length === 0) {
+    return <p>Noting to update!</p>;
+  }
+
   if (isLoading) {
     return <Spinner />;
   }
