@@ -1,16 +1,12 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import useSWR, { Fetcher } from 'swr';
 import { PaymentIntent } from '@stripe/stripe-js';
 
 import { Spinner } from '@/components';
 import { useCart } from '@/context/cart-context';
-
-const getOrderInvoice: Fetcher<PaymentIntent | undefined, string> = async (
-  ...args
-) => await (await fetch(...args)).json();
 
 export default function GetOrder({
   payment_intent,
@@ -20,10 +16,29 @@ export default function GetOrder({
   payment_intent_client_secret: string;
 }) {
   const { clearCart } = useCart();
-  const { data: payment, isLoading } = useSWR(
-    '/api/payment/' + `${payment_intent}/${payment_intent_client_secret}`,
-    getOrderInvoice
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [payment, setPayment] = useState<PaymentIntent | undefined>(undefined);
+
+  useEffect(() => {
+    if (!payment_intent || !payment_intent_client_secret) {
+      return;
+    }
+
+    (async () => {
+      fetch(
+        '/api/payment/' + `${payment_intent}/${payment_intent_client_secret}`
+      )
+        .then((res) => {
+          res.json().then((res: PaymentIntent | undefined) => {
+            if (res?.status === 'succeeded') {
+              clearCart();
+              setPayment(res);
+            }
+          });
+        })
+        .finally(() => setIsLoading(false));
+    })();
+  }, [payment_intent, payment_intent_client_secret, clearCart]);
 
   if (isLoading) {
     return <Spinner />;
@@ -31,10 +46,6 @@ export default function GetOrder({
 
   if (!payment || !payment_intent || !payment_intent_client_secret) {
     notFound();
-  }
-
-  if (payment?.status === 'succeeded') {
-    clearCart();
   }
 
   return (
