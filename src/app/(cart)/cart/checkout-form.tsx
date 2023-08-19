@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -22,37 +22,6 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret'
-    );
-
-    if (!clientSecret) {
-      return;
-    }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent?.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
-          break;
-        case 'processing':
-          setMessage('Your payment is processing.');
-          break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
-          break;
-        default:
-          setMessage('Something went wrong.');
-          break;
-      }
-    });
-  }, [stripe]);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -69,7 +38,7 @@ export default function CheckoutForm() {
       confirmParams: {
         receipt_email: email,
         // Make sure to change this to your payment completion page
-        return_url: `${process.env.API_URL}/order-invoice`,
+        return_url: `${window.location.origin}/order-invoice`,
       },
     });
 

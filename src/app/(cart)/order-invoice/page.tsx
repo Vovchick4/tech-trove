@@ -1,8 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import useSWR, { Fetcher } from 'swr';
 import { PaymentIntent } from '@stripe/stripe-js';
 
-export default async function Page({
+import { Spinner } from '@/components';
+import { useCart } from '@/context/cart-context';
+
+const getOrderInvoice: Fetcher<PaymentIntent | undefined, string> = async (
+  ...args
+) => await (await fetch(...args)).json();
+
+export default function Page({
   searchParams,
 }: {
   params: { slug: string };
@@ -12,16 +22,25 @@ export default async function Page({
     redirect_status: string;
   };
 }) {
-  const payment: PaymentIntent | undefined = await (
-    await fetch(
-      'http://localhost:3000/api/payment' + `/${searchParams.payment_intent}`,
-      { cache: 'no-cache' }
-    )
-  ).json();
+  const { clearCart } = useCart();
+  const { data: payment, isLoading } = useSWR(
+    '/api/payment/' +
+      `${searchParams.payment_intent}/${searchParams.payment_intent_client_secret}`,
+    getOrderInvoice
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   if (!payment && !searchParams.payment_intent) {
     notFound();
   }
+
+  if (payment?.status === 'succeeded') {
+    clearCart();
+  }
+  console.log('🚀 ~ file: page.tsx:44 ~ payment:', payment);
 
   return (
     <div className="max-7xl mx-auto flex flex-col items-center justify-center py-10">
@@ -33,7 +52,7 @@ export default async function Page({
       </h2>
       <div className="grid grid-cols-3 gap-8 mt-3">
         <div className="text-center p-2 rounded-md bg-green-400/75 dark:bg-green-400/25">
-          <h2>Amount:</h2>
+          <h2>Amount: {payment?.status}</h2>
           <p>{payment?.amount}</p>
         </div>
         <div className="text-center p-2 rounded-md bg-green-400/75 dark:bg-green-400/25">
