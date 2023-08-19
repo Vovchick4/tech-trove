@@ -23,6 +23,7 @@ export interface ICartContext {
   decrement: (slug: string) => void;
   findTotalPrice: () => number;
   findProductPrice: (slug: string) => number;
+  clearCart: () => void;
 }
 
 export const CartContext = createContext<ICartContext>({} as ICartContext);
@@ -82,6 +83,10 @@ export default function CartProvider({ children }: { children: ReactNode }) {
     return 0;
   }
 
+  function clearCart() {
+    setData([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -92,6 +97,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         decrement,
         findTotalPrice,
         findProductPrice,
+        clearCart,
       }}
     >
       {children}
