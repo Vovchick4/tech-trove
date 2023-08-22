@@ -1,6 +1,5 @@
 'use client';
 
-import { Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -16,11 +15,12 @@ import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 import { useTheme } from '@/hooks';
 import { AutoComplate, Button } from '.';
 import { useCart } from '@/context/cart-context';
+import { Fragment } from 'react';
 
 export default function Header() {
   const router = useRouter();
   const { cart } = useCart();
-  const { status } = useSession();
+  const { data, status } = useSession();
   const { isDark, toggleTheme } = useTheme();
 
   return (
@@ -157,7 +157,7 @@ export default function Header() {
                       Signed in as
                     </p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-300">
-                      james@site.com
+                      {data.user?.email}
                     </p>
                   </div>
                   <div className="mt-2 py-2 first:pt-0 last:pb-0">
