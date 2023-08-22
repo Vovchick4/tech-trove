@@ -16,7 +16,7 @@ export default function useTheme() {
         }
     }, [isDark])
 
-    const toggleTheme = () => {
+    const toggleTheme: () => any = () => {
         if (isDark) {
             setTheme('light')
         } else {
