@@ -1,11 +1,18 @@
 import './globals.css';
+import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { ThemeProvider } from '@/context';
 import DynamicScriptComponent from './lib';
+import { CartProvider, ThemeProvider } from '@/providers';
 import { NextAuthProvider } from '@/providers';
-import { Header, NavBar, OffCanvas, Footer } from '@/components';
+import { ProggressRouterEvent } from '@/events';
+import { NavBar, OffCanvas, Footer } from '@/components';
+
+const HeaderDynamic = dynamic(() => import('@/components/header'), {
+  loading: () => <p>Loading...</p>,
+  ssr: true,
+});
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -23,18 +30,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className + ' bg-white dark:bg-black'}>
         <ThemeProvider>
           <NextAuthProvider>
-            <div className={'flex flex-col justify-between min-h-screen'}>
-            <Header />
-            <NavBar />
-            <OffCanvas />
-            {children}
-            <Footer />
-            </div>
-            <ToastContainer />
+            <CartProvider>
+              <ProggressRouterEvent />
+              <HeaderDynamic />
+              <NavBar />
+              <OffCanvas />
+              {children}
+              <Footer />
+            </CartProvider>
             <DynamicScriptComponent />
           </NextAuthProvider>
         </ThemeProvider>

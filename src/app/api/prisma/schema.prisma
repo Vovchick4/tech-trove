@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -11,9 +12,43 @@ datasource db {
 }
 
 model Product {
-    id   String @id @default(auto()) @map("_id") @db.ObjectId
-    name String
-    slug String
+    id                   String         @id @default(uuid()) @map("_id") @db.ObjectId
+    name                 String
+    slug                 String
+    preview              String
+    describe             String
+    price                Float
+    categories_ids       String[]       @db.ObjectId
+    categories           MainCategory[] @relation(fields: [categories_ids], references: [id])
+    child_categories_ids String[]       @db.ObjectId
+    child_categories     SubCategory[]  @relation(fields: [child_categories_ids], references: [id])
+}
+
+model MainCategory {
+    id             String        @id @default(uuid()) @map("_id") @db.ObjectId
+    name           String
+    slug           String
+    product_ids    String[]      @default([]) @db.ObjectId
+    products       Product[]     @relation(fields: [product_ids], references: [id])
+    sub_categories SubCategory[]
+}
+
+model SubCategory {
+    id            String       @id @default(uuid()) @map("_id") @db.ObjectId
+    name          String
+    slug          String
+    parent_id     String       @map("parent_id") @db.ObjectId
+    main_category MainCategory @relation(fields: [parent_id], references: [id])
+    product_ids   String[]     @default([]) @db.ObjectId
+    products      Product[]    @relation(fields: [product_ids], references: [id])
+}
+
+model Order {
+    id             String @id @default(auto()) @map("_id") @db.ObjectId
+    total_price    Float
+    items          Json[]
+    payment_intent String @unique
+    user_email     String
 }
 
 model User {

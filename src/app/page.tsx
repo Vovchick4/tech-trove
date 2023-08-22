@@ -1,18 +1,17 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, MultiItemCarousel } from '@/components';
+
+import { MultiItemCarousel, Spinner } from '@/components';
 
 import PCImage from '../../public/PC-image-category.jpg';
 import ConsoleImage from '../../public/Console-image-category.jpg';
 import AccessoriesImage from '../../public/Accessories-image-category.jpg';
 import ControllersImage from '../../public/Controllers-image-category.jpg';
 
-import { CardProps } from '@/components/product-card';
+export const runtime = 'edge';
 
 export default async function Home() {
-  const products: CardProps[] = await (
-    await fetch('http://localhost:3000/api/products')
-  ).json();
   return (
     <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
       <div className="rounded-[30px] bg-slate-700 p-12 text-white black:text-white">
@@ -20,14 +19,14 @@ export default async function Home() {
           <h1 className="font-bold text-3xl py-6">Shop by category</h1>
         </div>
 
-        <div className=" flex flex-wrap justify-center flex-row p-4 w-full h-full gap-4">
-          <div className="flex justify-center w-300 min-w-250">
+        <div className="flex flex-wrap justify-center flex-row p-4 gap-4">
+          <div className="flex justify-center">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/console'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={ConsoleImage}
@@ -42,10 +41,10 @@ export default async function Home() {
           <div className="flex justify-center w-300 min-w-250">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/pc'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={PCImage}
@@ -60,10 +59,10 @@ export default async function Home() {
           <div className="flex justify-center w-300 min-w-250">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/accessories'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={AccessoriesImage}
@@ -78,10 +77,10 @@ export default async function Home() {
           <div className="flex justify-center w-300 min-w-250">
             <Link
               className="group relative flex flex-col items-center overflow-hidden rounded-[30px] bg-black/100 transition-all"
-              href={'/'}
+              href={'/products/controllers'}
             >
               <Image
-                className="rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
+                className="min-h-64 rounded-[30px] h-full transition-all opacity-75 object-cover hover:opacity-25 hover:scale-125"
                 width={250}
                 height={300}
                 src={ControllersImage}
@@ -100,7 +99,9 @@ export default async function Home() {
           <h1 className="font-bold text-3xl py-6">Best sales</h1>
         </div>
 
-        <MultiItemCarousel products={products} />
+        <Suspense fallback={<Spinner />}>
+          <MultiItemCarousel />
+        </Suspense>
       </div>
 
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 ">
@@ -108,7 +109,9 @@ export default async function Home() {
           <h1 className="font-bold text-3xl py-6">Hot discounts</h1>
         </div>
 
-        <MultiItemCarousel products={products} />
+        <Suspense fallback={<Spinner />}>
+          <MultiItemCarousel />
+        </Suspense>
       </div>
     </main>
   );

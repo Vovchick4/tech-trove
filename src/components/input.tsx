@@ -11,6 +11,7 @@ import Button, { SizeType } from './button';
 
 export interface IInput
   extends Omit<React.ComponentPropsWithRef<'input'>, 'size'> {
+  customRef?: any;
   isValidIcons?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -95,6 +96,7 @@ const TextArea = (props: React.ComponentPropsWithoutRef<'textarea'>) => {
 };
 
 export default function Input({
+  customRef = () => {},
   size = 'default',
   roundedFull = false,
   isValidIcons = true,
@@ -155,6 +157,7 @@ export default function Input({
           {leftIcon && leftIcon}
         </div>
         <input
+          ref={customRef}
           className={
             'block w-full outline-none text-black border-2 transition-all dark:focus:ring-blue-500 dark:bg-slate-900 dark:text-gray-400' +
             ` ${styles} ` +

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import 'preline/dist/preline.js'
 
 function DynamicScriptComponent() {
@@ -15,7 +15,7 @@ function DynamicScriptComponent() {
         };
     }, []);
 
-    //return <div>This component loads a script dynamically.</div>;
+    return <Fragment></Fragment>;
 }
 
 export default DynamicScriptComponent;
