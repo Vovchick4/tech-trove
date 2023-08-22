@@ -1,0 +1,1 @@
+export { default as WithAuthorization } from './with-authorization'
