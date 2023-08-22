@@ -186,6 +186,7 @@ export default function Header() {
                 className="h-[2.375rem] w-[2.375rem]"
                 color="blackedOpacity"
                 roundedFull
+                onClick={() => router.push('/login')}
               >
                 <CiLogin size={18} />
               </Button>
