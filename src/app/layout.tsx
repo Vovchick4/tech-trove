@@ -7,6 +7,9 @@ import DynamicScriptComponent from './lib';
 import { NextAuthProvider } from '@/providers';
 import { Header, NavBar, OffCanvas, Footer } from '@/components';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -31,6 +34,7 @@ export default function RootLayout({
             {children}
             <Footer />
             </div>
+            <ToastContainer />
             <DynamicScriptComponent />
           </NextAuthProvider>
         </ThemeProvider>

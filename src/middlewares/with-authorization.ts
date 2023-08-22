@@ -1,3 +1,4 @@
+import { log } from "console";
 import { getToken } from "next-auth/jwt";
 import {
     NextFetchEvent,
@@ -12,6 +13,7 @@ export default function WithAuthorization(
 ) {
     return async (request: NextRequest, next: NextFetchEvent) => {
         const pathname = request.nextUrl.pathname;
+        
         if (requireAuth.some((path) => pathname.startsWith(path))) {
             const token = await getToken({
                 req: request,

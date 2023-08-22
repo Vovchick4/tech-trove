@@ -15,6 +15,7 @@ import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 
 import { Button, Input, Spinner } from '.';
 import { useTheme } from '@/context/theme-context';
+import { deleteCookie } from 'cookies-next';
 
 export default function Header() {
   const router = useRouter();
@@ -155,7 +156,10 @@ export default function Header() {
                         color="blacked"
                         variant="ghost"
                         leftIcon={<ImExit size={18} />}
-                        onClick={async () => await signOut()}
+                        onClick={async () => {
+                          await signOut();
+                          deleteCookie('logged');
+                        }}
                       >
                         LogOut
                       </Button>

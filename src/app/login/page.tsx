@@ -6,10 +6,14 @@ import * as yup from 'yup';
 import { signIn, useSession } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { toast } from 'react-toastify';
 import { FcGoogle } from 'react-icons/fc';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Button, Input } from '@/components';
+import { useRouter } from 'next/navigation';
+import { setCookie, setCookies } from 'cookies-next'
+
 
 export interface ILoginData {
   email: string;
@@ -32,6 +36,8 @@ export default function Login() {
   } = useForm<ILoginData>({
     resolver: yupResolver(schema),
   });
+  const router = useRouter(); 
+
 
   const onSubmit: SubmitHandler<ILoginData> = async (data, e) => {
     e?.preventDefault();
@@ -43,18 +49,21 @@ export default function Login() {
         password: data.password,
         callbackUrl: '/',
       });
-
+      toast('Authenticated', { hideProgressBar: true, autoClose: 2000, type: 'success' })
       console.log(reposnse);
+      setCookie('logged', 'true');
+      router.push("/");
     } catch (error) {
       console.log(
         '🚀 ~ file: page.tsx:46 ~ constonSubmit:SubmitHandler<ILoginData>= ~ error:',
         error
       );
+      toast('Email or password is wrong', { hideProgressBar: true, autoClose: 2000, type: 'error' })
     } finally {
       setIsSubmiting(false);
     }
   };
-
+  
   const session = useSession();
 
   return (

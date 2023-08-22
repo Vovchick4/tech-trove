@@ -5,6 +5,7 @@ import Link from 'next/link';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { toast } from 'react-toastify';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Button, Input } from '@/components';
@@ -48,10 +49,18 @@ export default function Register() {
         cache: 'no-cache',
       });
       const json = await res.json();
-
-      alert(json?.message);
+      toast('Authenticated', {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: 'success',
+      });
     } catch (error) {
       console.log('🚀 ~ file: page.tsx:44 ~ Register ~ error:', error);
+      toast('Error', {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: 'error',
+      });
     } finally {
       setIsSubmiting(false);
     }
@@ -124,11 +133,7 @@ export default function Register() {
                   />
                 </div>
 
-                <Button
-                  isLoading={isSubmiting}
-                  type="submit"
-                  className="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                >
+                <Button isLoading={isSubmiting} type="submit">
                   Sign up
                 </Button>
               </div>
