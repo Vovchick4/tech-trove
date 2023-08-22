@@ -12,7 +12,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Button, Input } from '@/components';
 import { useRouter } from 'next/navigation';
-import { setCookie, setCookies } from 'cookies-next'
 
 
 export interface ILoginData {
@@ -51,7 +50,6 @@ export default function Login() {
       });
       toast('Authenticated', { hideProgressBar: true, autoClose: 2000, type: 'success' })
       console.log(reposnse);
-      setCookie('logged', 'true');
       router.push("/");
     } catch (error) {
       console.log(

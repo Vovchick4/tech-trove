@@ -10,6 +10,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Button, Input } from '@/components';
 import { FcGoogle } from 'react-icons/fc';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export interface IRegisterData {
   email: string;
@@ -25,10 +27,12 @@ const schema = yup.object({
     .string()
     .oneOf([yup.ref('password')])
     .required(),
-  accept_rules: yup.boolean().default(false),
+  accept_rules: yup.boolean().default(false).oneOf([true], 'This field need to selected'),
 });
 
 export default function Register() {
+  const router = useRouter(); 
+
   const [isSubmiting, setIsSubmiting] = useState(false);
   const {
     register,
@@ -54,6 +58,14 @@ export default function Register() {
         autoClose: 2000,
         type: 'success',
       });
+      const reposnse = await signIn('credentials', {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        callbackUrl: '/',
+      });
+      router.push("/");
+
     } catch (error) {
       console.log('🚀 ~ file: page.tsx:44 ~ Register ~ error:', error);
       toast('Error', {

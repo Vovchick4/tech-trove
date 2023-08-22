@@ -30,5 +30,5 @@ export default authMiddleware;
 // };
 
 export const config = {
-  matcher: ['/login/:path*'],
+  matcher: ['/login/:path*', '/register/:path*'],
 };
