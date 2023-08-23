@@ -36,8 +36,8 @@ export default async function ProductInfo({
   const { name, price, describe } = product;
 
   return (
-    <div className="flex flex-col min-h-screen m-6 p-8 rounded-[30px] bg-slate-700">
-      <div className="grid grid-cols-2 gap-4">
+    <div className="flex flex-col m-6 p-8 rounded-[30px] bg-slate-700">
+      <div className="grid grid-rows-2 gap-4 sm:grid-cols-2">
         <div className="flex flex-col justify-center">
           <Gallery />
         </div>
