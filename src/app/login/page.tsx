@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import { signIn, useSession } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,8 +12,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { Button, Input } from '@/components';
-import { useRouter } from 'next/navigation';
-
 
 export interface ILoginData {
   email: string;
@@ -35,8 +34,7 @@ export default function Login() {
   } = useForm<ILoginData>({
     resolver: yupResolver(schema),
   });
-  const router = useRouter(); 
-
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<ILoginData> = async (data, e) => {
     e?.preventDefault();
@@ -48,20 +46,23 @@ export default function Login() {
         password: data.password,
         callbackUrl: '/',
       });
-      toast('Authenticated', { hideProgressBar: true, autoClose: 2000, type: 'success' })
-      console.log(reposnse);
-      router.push("/");
+      toast('Authenticated', {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: 'success',
+      });
+      router.push('/');
     } catch (error) {
-      console.log(
-        '🚀 ~ file: page.tsx:46 ~ constonSubmit:SubmitHandler<ILoginData>= ~ error:',
-        error
-      );
-      toast('Email or password is wrong', { hideProgressBar: true, autoClose: 2000, type: 'error' })
+      toast('Email or password is wrong', {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: 'error',
+      });
     } finally {
       setIsSubmiting(false);
     }
   };
-  
+
   const session = useSession();
 
   return (

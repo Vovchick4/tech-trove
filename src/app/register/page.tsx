@@ -27,11 +27,14 @@ const schema = yup.object({
     .string()
     .oneOf([yup.ref('password')])
     .required(),
-  accept_rules: yup.boolean().default(false).oneOf([true], 'This field need to selected'),
+  accept_rules: yup
+    .boolean()
+    .default(false)
+    .oneOf([true], 'This field need to selected'),
 });
 
 export default function Register() {
-  const router = useRouter(); 
+  const router = useRouter();
 
   const [isSubmiting, setIsSubmiting] = useState(false);
   const {
@@ -46,28 +49,24 @@ export default function Register() {
     e?.preventDefault();
     try {
       setIsSubmiting(true);
-
-      const res = await fetch('http://localhost:3000/api/auth/register', {
+      await fetch('http://localhost:3000/api/auth/register', {
         method: 'POST',
         body: JSON.stringify(data),
         cache: 'no-cache',
       });
-      const json = await res.json();
-      toast('Authenticated', {
-        hideProgressBar: true,
-        autoClose: 2000,
-        type: 'success',
-      });
-      const reposnse = await signIn('credentials', {
+      await signIn('credentials', {
         redirect: false,
         email: data.email,
         password: data.password,
         callbackUrl: '/',
       });
-      router.push("/");
-
+      toast('Authenticated', {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: 'success',
+      });
+      router.push('/');
     } catch (error) {
-      console.log('🚀 ~ file: page.tsx:44 ~ Register ~ error:', error);
       toast('Error', {
         hideProgressBar: true,
         autoClose: 2000,
