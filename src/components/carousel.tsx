@@ -53,7 +53,7 @@ const settings = {
 };
 
 const fetchProduct: Fetcher<ICardProps[], string> = async (...arg) =>
-  (await (await fetch(...arg)).json()).products;
+  (await (await fetch(...arg)).json()).products.data;
 
 export default function MultiItemCarousel({}: {}) {
   const { addToCart } = useCart();

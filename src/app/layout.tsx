@@ -1,7 +1,9 @@
 import './globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 
 import DynamicScriptComponent from './lib';
 import { CartProvider, ThemeProvider } from '@/providers';
@@ -13,9 +15,6 @@ const HeaderDynamic = dynamic(() => import('@/components/header'), {
   loading: () => <p>Loading...</p>,
   ssr: true,
 });
-
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -41,6 +40,7 @@ export default function RootLayout({
               <OffCanvas />
               {children}
               <Footer />
+              <ToastContainer />
             </CartProvider>
             <DynamicScriptComponent />
           </NextAuthProvider>

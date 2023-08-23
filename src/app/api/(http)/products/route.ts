@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
     try {
-        const perPage = 3;
+        const perPage = 6;
         const page_slug: any = request.nextUrl.searchParams.get("page") || 1;
         const categories_slug: any = request.nextUrl.searchParams.get("categories_slug");
 

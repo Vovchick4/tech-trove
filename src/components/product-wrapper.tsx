@@ -8,7 +8,7 @@ import { useCart } from '@/context/cart-context';
 import { useDocumentScrollEnd } from '@/hooks';
 import ProductCard, { ICardProps } from './product-card';
 
-const PER_PAGE = 3;
+const PER_PAGE = 6;
 
 export default function ProductWrapper({ slug }: { slug: string[] }) {
   const [count, setCount] = useState<number>(0);
