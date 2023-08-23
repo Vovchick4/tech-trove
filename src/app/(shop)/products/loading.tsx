@@ -47,8 +47,6 @@ export default function Loading() {
           y = 0;
         }
 
-        console.log(x, y);
-
         return (
           <rect key={i} x={x} y={y} rx="8" ry="8" width="290" height="380" />
         );
