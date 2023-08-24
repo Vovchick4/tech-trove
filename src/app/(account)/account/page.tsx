@@ -1,12 +1,16 @@
+import Bio from '@/components/bio';
+import ContactsBio from '@/components/contacts-bio';
 import React, { Fragment } from 'react';
 
 export default function Account() {
   return (
     <div className="flex flex-col">
-      <h1 className="text-slate-800 text-xl dark:text-white">Personal Data</h1>
+      <h1 className="text-slate-800 font-bold text-xl dark:text-white">
+        Personal Data
+      </h1>
       <div className="hs-accordion-group m-3">
         <div
-          className="hs-accordion"
+          className="hs-accordion active"
           id="hs-basic-with-title-and-arrow-stretched-heading-one"
         >
           <button
@@ -50,7 +54,14 @@ export default function Account() {
             className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
             aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one"
           >
-            <p className="text-gray-800 dark:text-gray-200">Bio Data</p>
+            <Bio
+              initialData={{
+                firstName: 'Bar',
+                lastName: 'Snickers',
+                gender: 'M',
+                birthDate: '2023-08-01',
+              }}
+            />
           </div>
         </div>
 
@@ -100,7 +111,14 @@ export default function Account() {
             aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two"
           >
             <p className="text-gray-800 dark:text-gray-200">
-              Email and phone number and delivery address
+              <ContactsBio
+                initialData={{
+                  phNumber: '+380676733444',
+                  email: 'Bar_Snickers@gmail.com',
+                  address:
+                    'Нова Пошта. Поштомат №4176 м. Львів, Львівська область',
+                }}
+              />
             </p>
           </div>
         </div>
@@ -150,7 +168,9 @@ export default function Account() {
             className="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
             aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three"
           >
-            <p className="text-gray-800 dark:text-gray-200">Change password</p>
+            <p className="text-gray-800 dark:text-gray-200">
+              Change/Retrive password
+            </p>
           </div>
         </div>
       </div>
