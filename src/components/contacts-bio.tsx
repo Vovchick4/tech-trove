@@ -49,7 +49,7 @@ const ContactsBio: React.FC<IChangeContactsProps> = ({ initialData }) => {
               className="text-black dark:text-white"
               roundedFull
               type="text"
-              name="lastName"
+              name="phNumber"
               value={formData.phNumber}
               onChange={handleInputChange}
             />
@@ -64,7 +64,7 @@ const ContactsBio: React.FC<IChangeContactsProps> = ({ initialData }) => {
               className="text-black dark:text-white"
               roundedFull
               type="email"
-              name="lastName"
+              name="email"
               value={formData.email}
               onChange={handleInputChange}
             />
@@ -79,7 +79,7 @@ const ContactsBio: React.FC<IChangeContactsProps> = ({ initialData }) => {
               className="text-black dark:text-white"
               roundedFull
               type="text"
-              name="lastName"
+              name="address"
               value={formData.address}
               onChange={handleInputChange}
             />

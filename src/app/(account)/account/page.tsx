@@ -2,6 +2,9 @@ import Bio from '@/components/bio';
 import ContactsBio from '@/components/contacts-bio';
 import React, { Fragment } from 'react';
 
+import { BsPersonVcard, BsShieldLock } from 'react-icons/bs';
+import { AiOutlineReconciliation } from 'react-icons/ai';
+
 export default function Account() {
   return (
     <div className="flex flex-col">
@@ -17,6 +20,7 @@ export default function Account() {
             className="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
             aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one"
           >
+            <BsPersonVcard size={20} />
             BIO
             <svg
               className="hs-accordion-active:hidden hs-accordion-active:text-blue-600 hs-accordion-active:group-hover:text-blue-600 block w-3 h-3 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
@@ -73,6 +77,7 @@ export default function Account() {
             className="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
             aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two"
           >
+            <AiOutlineReconciliation size={20} />
             Contacts
             <svg
               className="hs-accordion-active:hidden hs-accordion-active:text-blue-600 hs-accordion-active:group-hover:text-blue-600 block w-3 h-3 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
@@ -131,6 +136,7 @@ export default function Account() {
             className="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
             aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-three"
           >
+            <BsShieldLock size={20} />
             Security
             <svg
               className="hs-accordion-active:hidden hs-accordion-active:text-blue-600 hs-accordion-active:group-hover:text-blue-600 block w-3 h-3 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
