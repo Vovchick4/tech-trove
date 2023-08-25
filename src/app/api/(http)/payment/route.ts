@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
         });
 
         return NextResponse.json({
+            paymentIntentID: paymentIntent.id,
             clientSecret: paymentIntent.client_secret,
         });
     } catch (error) {

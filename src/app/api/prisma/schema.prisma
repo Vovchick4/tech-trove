@@ -44,11 +44,14 @@ model SubCategory {
 }
 
 model Order {
-    id             String @id @default(auto()) @map("_id") @db.ObjectId
+    id             String      @id @default(auto()) @map("_id") @db.ObjectId
     total_price    Float
     items          Json[]
-    payment_intent String @unique
+    payment_intent String      @unique
     user_email     String
+    status         OrderStatus @default(no_paid)
+    user_id        String?     @default("") @db.ObjectId
+    user           User?       @relation(fields: [user_id], references: [id])
 }
 
 model User {
@@ -58,4 +61,10 @@ model User {
     name      String?
     photo     String?
     password  String
+    Order     Order[]
+}
+
+enum OrderStatus {
+    paid
+    no_paid
 }

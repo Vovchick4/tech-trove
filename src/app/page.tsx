@@ -1,15 +1,20 @@
-import { Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { MultiItemCarousel, Spinner } from '@/components';
+import { Spinner } from '@/components';
 
 import PCImage from '../../public/PC-image-category.jpg';
 import ConsoleImage from '../../public/Console-image-category.jpg';
 import AccessoriesImage from '../../public/Accessories-image-category.jpg';
 import ControllersImage from '../../public/Controllers-image-category.jpg';
+import dynamic from 'next/dynamic';
 
 export const runtime = 'edge';
+
+const MultiItemCarousel = dynamic(() => import('@/components/carousel'), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
 
 export default async function Home() {
   return (
@@ -99,9 +104,7 @@ export default async function Home() {
           <h1 className="font-bold text-3xl py-6">Best sales</h1>
         </div>
 
-        <Suspense fallback={<Spinner />}>
-          <MultiItemCarousel />
-        </Suspense>
+        <MultiItemCarousel />
       </div>
 
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 ">
@@ -109,9 +112,7 @@ export default async function Home() {
           <h1 className="font-bold text-3xl py-6">Hot discounts</h1>
         </div>
 
-        <Suspense fallback={<Spinner />}>
-          <MultiItemCarousel />
-        </Suspense>
+        <MultiItemCarousel />
       </div>
     </main>
   );

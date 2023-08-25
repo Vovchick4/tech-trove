@@ -9,16 +9,22 @@ import {
 } from '@stripe/react-stripe-js';
 import { Layout } from '@stripe/stripe-js';
 import { Button, Spinner } from '@/components';
+import { useCheckOutFormData } from '@/context/payment-form-data-context';
+
+interface ICheckOutForm {
+  payId: string;
+  clientSecret: string;
+}
 
 const paymentElementOptions: { layout: Layout } = {
   layout: 'tabs',
 };
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ payId, clientSecret }: ICheckOutForm) {
   const stripe = useStripe();
   const elements = useElements();
+  const { email, onDataChange } = useCheckOutFormData();
 
-  const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string | null | undefined>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -33,12 +39,14 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
+    onDataChange<boolean>(true, 'isPaymentOrder');
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        receipt_email: email,
+        // receipt_email: email,
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/order-invoice`,
+        return_url: `${window.location.origin}/cart`,
       },
     });
 
@@ -60,7 +68,7 @@ export default function CheckoutForm() {
     <form id="payment-form" onSubmit={handleSubmit}>
       <LinkAuthenticationElement
         id="link-authentication-element"
-        onChange={(e: any) => setEmail(e.target.value)}
+        onChange={(e) => onDataChange(e.value, 'email')}
       />
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <Button

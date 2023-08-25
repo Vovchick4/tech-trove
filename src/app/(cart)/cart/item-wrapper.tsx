@@ -1,14 +1,89 @@
 'use client';
 
+import { useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+import { Id, toast } from 'react-toastify';
 import { IoMdClose } from 'react-icons/io';
 
 import { Button } from '@/components';
 import { useCart } from '@/context/cart-context';
+import { useCheckOutFormData } from '@/context/payment-form-data-context';
+
+const fetchOrder = async (
+  clientSecret: string,
+  payment_intent: string,
+  data: any
+) => {
+  return await fetch(`/api/payment/${payment_intent}/${clientSecret}`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    cache: 'no-cache',
+  });
+};
 
 export default function ItemWrapper() {
-  const { cart, increment, decrement, removeFromCart, findProductPrice } =
-    useCart();
+  const toastId = useRef<Id | null>(null);
+  const { data } = useSession();
+  const { email, isPaymentOrder, onDataChange } = useCheckOutFormData();
+  const searchparam = useSearchParams();
+  const {
+    cart,
+    increment,
+    decrement,
+    removeFromCart,
+    findProductPrice,
+    clearCart,
+  } = useCart();
+
+  useEffect(() => {
+    if (
+      !searchparam.get('payment_intent_client_secret') ||
+      !searchparam.get('payment_intent') ||
+      !toastId ||
+      !email ||
+      !isPaymentOrder ||
+      cart.length === 0
+    )
+      return;
+
+    toastId.current = toast('Loading... Order!', {
+      isLoading: true,
+      autoClose: false,
+    });
+
+    fetchOrder(
+      searchparam.get('payment_intent_client_secret') as string,
+      searchparam.get('payment_intent') as string,
+      {
+        user_email: email,
+        user_id: data?.user?.email,
+        items: cart,
+      }
+    )
+      .then(async (res) => {
+        if (!((await res.json())?.message as string | null)) {
+          clearCart();
+          onDataChange<boolean>(false, 'isPaymentOrder');
+          toast.update(toastId.current as Id, {
+            render: 'A new awesome order!',
+            type: toast.TYPE.SUCCESS,
+            isLoading: false,
+            autoClose: 5000,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.update(toastId.current as Id, {
+          render: (error as Error).message,
+          type: toast.TYPE.ERROR,
+          isLoading: false,
+          autoClose: 5000,
+        });
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart, email, isPaymentOrder]);
 
   if (cart.length === 0) {
     return <p>Your Cart Is Empty!</p>;
@@ -35,7 +110,7 @@ export default function ItemWrapper() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              Count items: {count}, {findProductPrice(slug)}$
+              Count items: {count}, {findProductPrice(slug).toFixed(2)}$
               <Button
                 variant="ghost"
                 color="blackedOpacity"

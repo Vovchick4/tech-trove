@@ -45,16 +45,9 @@ export default function GetOrder({
           res
             .json()
             .then(
-              ({
-                payment: res,
-              }: {
-                payment: PaymentIntent | undefined;
-                order: IOrder;
-              }) => {
-                if (res?.status === 'succeeded') {
-                  clearCart();
-                  setPayment({ payment: res, order });
-                }
+              (res: { payment: PaymentIntent | undefined; order: IOrder }) => {
+                console.log('🚀 ~ file: get-order.tsx:49 ~ .then ~ res:', res);
+                setPayment({ payment: res.payment, order });
               }
             );
         })
@@ -62,10 +55,6 @@ export default function GetOrder({
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart, payment_intent, payment_intent_client_secret, clearCart]);
-
-  if (cart.length === 0) {
-    return <p>Noting to update!</p>;
-  }
 
   if (isLoading) {
     return <Spinner />;

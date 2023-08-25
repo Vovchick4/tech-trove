@@ -69,9 +69,14 @@ export default function CartProvider({ children }: { children: ReactNode }) {
   }
 
   function findTotalPrice() {
-    return data.reduce(
-      (prevValue, nextValue) => nextValue.price * nextValue.count + prevValue,
-      0
+    return Number(
+      data
+        .reduce(
+          (prevValue, nextValue) =>
+            nextValue.price * nextValue.count + prevValue,
+          0
+        )
+        .toFixed(2)
     );
   }
 

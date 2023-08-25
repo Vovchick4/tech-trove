@@ -12,7 +12,6 @@ import { ProggressRouterEvent } from '@/events';
 import { NavBar, OffCanvas, Footer } from '@/components';
 
 const HeaderDynamic = dynamic(() => import('@/components/header'), {
-  loading: () => <p>Loading...</p>,
   ssr: true,
 });
 

@@ -15,26 +15,51 @@ export async function POST(request: NextRequest,
             if (paymentIntents) {
                 const getOrder = await prisma.order.findFirst({ where: { payment_intent: paymentIntents.id } })
                 if (getOrder) {
-                    return NextResponse.json({ payment: paymentIntents, order: getOrder });
-                } else {
-                    const { products } = await request.json();
-                    const newOrder = await prisma.order.create({
+                    await prisma.order.update({
+                        where: { payment_intent },
                         data: {
-                            total_price: paymentIntents.amount / 100,
-                            items: products,
-                            user_email: "ch.vova@gmail",
-                            payment_intent: paymentIntents.id
-                        }
+                            status: "paid"
+                        },
                     })
+                    return NextResponse.json({ payment: paymentIntents, order: getOrder, message: "this payment already has!" }, { status: 500 });
+                } else {
+                    const { user_email, user_id, items } = await request.json();
+                    console.log("🚀 ~ file: route.ts:27 ~ items:", items, user_email);
+
+                    let newOrder = null;
+                    const findUser = await prisma.user.findFirst({ where: { email: user_id || "" } })
+                    if (findUser) {
+                        newOrder = await prisma.order.create({
+                            data: {
+                                total_price: paymentIntents.amount / 100,
+                                items,
+                                user_email: user_email.email,
+                                user: { connect: findUser },
+                                payment_intent: paymentIntents.id,
+                                status: "paid"
+                            }
+                        })
+                    } else {
+                        newOrder = await prisma.order.create({
+                            data: {
+                                total_price: paymentIntents.amount / 100,
+                                items,
+                                user_email: user_email.email,
+                                payment_intent: paymentIntents.id,
+                                status: "paid"
+                            }
+                        })
+                    }
+
                     return NextResponse.json({ payment: paymentIntents, order: newOrder });
                 }
             } else {
-                return NextResponse.json({ error: "Not found this payment intent!" });
+                return NextResponse.json({ error: "Not found this payment intent!" }, { status: 500 });
             }
         } else {
-            return NextResponse.json({ error: "Provide payment desc!" });
+            return NextResponse.json({ error: "Provide payment desc!" }, { status: 500 });
         }
     } catch (error) {
-        return NextResponse.json({ error: (error as Error).message });
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
 }

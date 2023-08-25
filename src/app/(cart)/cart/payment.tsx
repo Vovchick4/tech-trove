@@ -22,7 +22,10 @@ export const appearance: Appearance = {
 
 export default function Payment() {
   const { cart, findTotalPrice } = useCart();
-  const [clientSecret, setClientSecret] = useState('');
+  const [dataSecret, setClientSecret] = useState<{
+    clientSecret: string;
+    paymentID: string;
+  }>({ clientSecret: '', paymentID: '' });
   const [isCreatingPayment, setIsCreatingPayment] = useState(true);
 
   useEffect(() => {
@@ -34,13 +37,13 @@ export default function Payment() {
         body: JSON.stringify({ items: cart, totalPrice: findTotalPrice() }),
       });
       const data = await response.json();
-      setClientSecret(data.clientSecret);
+      setClientSecret(data);
       setIsCreatingPayment(false);
     })();
   }, [cart, findTotalPrice]);
 
   const options = {
-    clientSecret,
+    clientSecret: dataSecret.clientSecret,
     appearance,
   };
 
@@ -49,7 +52,10 @@ export default function Payment() {
       {isCreatingPayment && <Spinner text="Creating payment..." />}
       {!isCreatingPayment && options.clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
+          <CheckoutForm
+            payId={dataSecret.paymentID}
+            clientSecret={options.clientSecret}
+          />
         </Elements>
       )}
     </Fragment>
