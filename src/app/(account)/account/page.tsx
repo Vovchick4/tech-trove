@@ -8,7 +8,7 @@ import { AiOutlineReconciliation } from 'react-icons/ai';
 export default function Account() {
   return (
     <div className="flex flex-col">
-      <h1 className="text-slate-800 font-bold text-xl dark:text-white">
+      <h1 className="mt-4 text-slate-800 font-bold text-xl dark:text-white md:mt-0">
         Personal Data
       </h1>
       <div className="hs-accordion-group m-3">
