@@ -7,8 +7,8 @@ import { FcLike } from 'react-icons/fc';
 
 export default function ListItem() {
   return (
-    <ul className="max-w-md divide-y divide-gray-800 bg-gray-900 rounded-[30px]">
-      <li className="mb-4 p-3 rounded-[30px] bg-slate-700 hover:bg-slate-500">
+    <ul className="flex flex-wrap divide-x divide-gray-800 bg-gray-900 rounded-[30px] md:flex-col md:divide-y">
+      <li className="p-3 w-full rounded-[30px] bg-slate-700 hover:bg-slate-500 md:mb-4">
         <Link className="flex items-center space-x-4" href="/account">
           <div className="flex-shrink-0">
             <Image
@@ -25,7 +25,7 @@ export default function ListItem() {
           </div>
         </Link>
       </li>
-      <li className="mb-4 p-3 rounded-[30px] hover:bg-slate-700">
+      <li className="m-2 p-3 rounded-[30px] hover:bg-slate-700 md:mb-4">
         <Link className="flex items-center space-x-4" href="/account/my-orders">
           <div className="flex-shrink-0">
             <BsFillMenuButtonWideFill size={20} />
@@ -35,7 +35,7 @@ export default function ListItem() {
           </div>
         </Link>
       </li>
-      <li className="mb-4 p-3 rounded-[30px] hover:bg-slate-700">
+      <li className="m-2 p-3 rounded-[30px] hover:bg-slate-700 md:mb-4">
         <Link
           className="flex items-center space-x-4"
           href="/account/last-views"
@@ -48,7 +48,7 @@ export default function ListItem() {
           </div>
         </Link>
       </li>
-      <li className="mb-4 p-3 rounded-[30px] hover:bg-slate-700">
+      <li className="m-2 p-3 rounded-[30px] hover:bg-slate-700 md:mb-4">
         <Link className="flex items-center space-x-4" href="/account/liked">
           <div className="flex-shrink-0">
             <FcLike size={20} />
