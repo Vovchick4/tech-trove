@@ -158,7 +158,7 @@ export default function Header() {
                       Signed in as
                     </p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-300">
-                      {(data as any)?.session.user?.email}
+                      {(data as any)?.session?.email}
                     </p>
                   </div>
                   <div className="pt-2">

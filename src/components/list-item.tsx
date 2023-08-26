@@ -1,27 +1,40 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Avatar from '../../public/Avatar.jpg';
-import { BsFillMenuButtonWideFill } from 'react-icons/bs';
-import { RiSearchEyeFill } from 'react-icons/ri';
-import { FcLike } from 'react-icons/fc';
+import { getServerSession } from 'next-auth';
 
-export default function ListItem() {
+import { FcLike } from 'react-icons/fc';
+import { RiSearchEyeFill } from 'react-icons/ri';
+import { BsFillMenuButtonWideFill } from 'react-icons/bs';
+import Avatar from '../../public/Avatar.jpg';
+import { authOptions } from '@/app/api/lib/auth-options';
+
+export interface IUser {
+  email: string;
+}
+
+export default async function ListItem() {
+  const {
+    user: { email },
+  } = (await getServerSession(authOptions)) as { user: IUser };
+
   return (
     <ul className="max-w-md divide-y divide-gray-800 bg-gray-900 rounded-[30px]">
       <li className="mb-4 p-3 rounded-[30px] bg-slate-700 hover:bg-slate-500">
         <Link className="flex items-center space-x-4" href="/account">
           <div className="flex-shrink-0">
             <Image
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 rounded-full object-cover"
               src={Avatar}
               width={400}
               height={400}
               alt="Profile Image"
             />
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="flex-1">
             <p className="text-sm font-medium text-white">Bar Snickers</p>
-            <p className="text-sm text-gray-400">Bar_Snickers@gmail.com</p>
+            <p className="text-sm text-gray-400 text-ellipsis overflow-hidden">
+              {email}
+            </p>
           </div>
         </Link>
       </li>
