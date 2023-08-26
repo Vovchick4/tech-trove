@@ -7,9 +7,11 @@ import { RiSearchEyeFill } from 'react-icons/ri';
 import { BsFillMenuButtonWideFill } from 'react-icons/bs';
 import Avatar from '../../public/Avatar.jpg';
 import { authOptions } from '@/app/api/lib/auth-options';
+import { IOrder } from '@/app/(cart)/order-invoice/get-order';
 
 export interface IUser {
   email: string;
+  Order: IOrder[];
 }
 
 export default async function ListItem() {

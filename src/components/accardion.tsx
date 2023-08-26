@@ -1,11 +1,11 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, ReactNode } from 'react';
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from 'react-icons/md';
 import { Button } from '.';
 
 export interface IAccardion {
-  title: string;
+  title: string | ReactNode;
   list: any[];
   RenderLabelList: (item: any) => any;
 }
@@ -46,7 +46,7 @@ export default function Accardion({
         fullWidth
         onClick={toggleIsOpen}
       >
-        <span>{title}</span>
+        {typeof title === 'string' ? <span>{title}</span> : title}
         {isOpen ? (
           <MdKeyboardArrowUp size={22} />
         ) : (

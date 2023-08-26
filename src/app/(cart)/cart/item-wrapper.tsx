@@ -58,7 +58,7 @@ export default function ItemWrapper() {
       searchparam.get('payment_intent') as string,
       {
         user_email: email,
-        user_id: data?.user?.email,
+        user_id: (data as any)?.session?.email,
         items: cart,
       }
     )
@@ -83,7 +83,7 @@ export default function ItemWrapper() {
         });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, email, isPaymentOrder]);
+  }, [cart, email, isPaymentOrder, (data as any)?.session?.email]);
 
   if (cart.length === 0) {
     return <p>Your Cart Is Empty!</p>;

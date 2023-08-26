@@ -59,11 +59,17 @@ export const authOptions: NextAuthOptions = {
         }),
     ],
     callbacks: {
-        session: ({ session, token }) => {
+        session: async ({ session, token, user }) => {
+            const guest = await prisma.user.findUnique({
+                where: {
+                    email: session.user?.email || "",
+                },
+                include: { Order: true }
+            });
             return {
                 ...session,
                 user: {
-                    ...session.user,
+                    ...guest,
                     id: token.id,
                     randomKey: token.randomKey,
                 },
