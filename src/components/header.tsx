@@ -1,10 +1,12 @@
 'use client';
 
+import { Fragment } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
+import { ImExit } from 'react-icons/im';
 import { GiMoon } from 'react-icons/gi';
 import { CiLogin } from 'react-icons/ci';
 import { FaOpencart } from 'react-icons/fa';
@@ -15,7 +17,6 @@ import { BiPurchaseTag, BiSolidUserAccount, BiSun } from 'react-icons/bi';
 import { useTheme } from '@/hooks';
 import { AutoComplate, Button } from '.';
 import { useCart } from '@/context/cart-context';
-import { Fragment } from 'react';
 
 export default function Header() {
   const router = useRouter();
@@ -157,19 +158,23 @@ export default function Header() {
                       Signed in as
                     </p>
                     <p className="text-sm font-medium text-gray-800 dark:text-gray-300">
-                      {data.user?.email}
+                      {(data as any)?.session.user?.email}
                     </p>
                   </div>
-                  <div className="mt-2 py-2 first:pt-0 last:pb-0">
-                    <a
-                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                      href="#"
+                  <div className="pt-2">
+                    <Button
+                      style={{ justifyContent: 'flex-start' }}
+                      fullWidth
+                      variant="ghost"
+                      size="small"
+                      color="blackedOpacity"
+                      onClick={() => router.push('/account')}
                     >
                       <BiSolidUserAccount size={18} />
                       Account
-                    </a>
+                    </Button>
                   </div>
-                  <div className="mt-2 py-2 first:pt-0 last:pb-0">
+                  <div className="pt-2">
                     <a
                       className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                       href="#"
@@ -177,6 +182,19 @@ export default function Header() {
                       <BiPurchaseTag size={18} />
                       Purchases
                     </a>
+                  </div>
+                  <div className="pt-2">
+                    <Button
+                      style={{ justifyContent: 'flex-start' }}
+                      fullWidth
+                      variant="ghost"
+                      size="small"
+                      color="blackedOpacity"
+                      onClick={() => signOut()}
+                    >
+                      <ImExit size={18} />
+                      Exit
+                    </Button>
                   </div>
                 </div>
               </div>

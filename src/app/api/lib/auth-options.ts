@@ -42,16 +42,17 @@ export const authOptions: NextAuthOptions = {
                     where: {
                         email: credentials.email,
                     },
+                    include: { Order: true }
                 });
 
                 if (!user || !(await compare(credentials.password, user.password))) {
                     return null;
                 }
 
+                (user.password as string | undefined) = undefined;
+
                 return {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name,
+                    ...user,
                     randomKey: "Hey HO New Houmi is came!",
                 };
             },
