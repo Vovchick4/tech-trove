@@ -12,7 +12,7 @@ const PER_PAGE = 6;
 
 export default function ProductWrapper({ slug }: { slug: string[] }) {
   const [count, setCount] = useState<number>(0);
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
   const isDocSrollEnd = useDocumentScrollEnd();
 
   const {
@@ -55,7 +55,13 @@ export default function ProductWrapper({ slug }: { slug: string[] }) {
           issues &&
           issues.map((product, index) => (
             <div key={index}>
-              <ProductCard {...product} addToCart={addToCart} />
+              <ProductCard
+                {...product}
+                cartItem={
+                  cart.find((c) => c.slug === product.slug) || undefined
+                }
+                addToCart={addToCart}
+              />
             </div>
           ))}
       </div>

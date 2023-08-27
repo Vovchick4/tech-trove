@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '.';
+import { ICart } from '@/context/cart-context';
 
 export interface ICardProps {
   name: string;
   describe: string;
   price: number;
   slug: string;
+  cartItem?: ICart;
   preview?: string;
   addToCart?: (data: ICardProps) => void;
 }
@@ -16,6 +18,7 @@ export default function ProductCard({
   describe,
   price,
   slug,
+  cartItem,
   preview = undefined,
   addToCart = () => {},
 }: ICardProps) {
@@ -56,7 +59,7 @@ export default function ProductCard({
           color="blackedOpacity"
           onClick={() => addToCart({ name, describe, price, slug, preview })}
         >
-          Buy
+          {!cartItem ? 'Buy' : `Add to cart ${cartItem.count}`}
         </Button>
       </div>
     </div>

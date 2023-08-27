@@ -11,7 +11,7 @@ import {
 import { useLocalStorage } from '@/hooks';
 import { ICardProps } from '@/components/product-card';
 
-export interface ICart extends ICardProps {
+export interface ICart extends Omit<ICardProps, 'cartItem'> {
   count: number;
 }
 

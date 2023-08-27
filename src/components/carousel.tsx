@@ -59,7 +59,7 @@ const fetchProduct: Fetcher<ICardProps[], string> = async (...arg) =>
   (await (await fetch(...arg)).json()).products.data;
 
 export default function MultiItemCarousel({}: {}) {
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
 
   const { data: products, isLoading } = useSWR('/api/products', fetchProduct);
 
@@ -70,7 +70,13 @@ export default function MultiItemCarousel({}: {}) {
         <Slider {...settings}>
           {products.map((product, index) => (
             <div key={index} className="px-2">
-              <ProductCard {...product} addToCart={addToCart} />
+              <ProductCard
+                {...product}
+                cartItem={
+                  cart.find((c) => c.slug === product.slug) || undefined
+                }
+                addToCart={addToCart}
+              />
             </div>
           ))}
         </Slider>

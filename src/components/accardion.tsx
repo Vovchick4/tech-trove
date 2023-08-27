@@ -6,12 +6,14 @@ import { Button } from '.';
 
 export interface IAccardion {
   title: string | ReactNode;
+  rightTitle: string | ReactNode;
   list: any[];
   RenderLabelList: (item: any) => any;
 }
 
 export default function Accardion({
   title,
+  rightTitle,
   list,
   RenderLabelList,
 }: IAccardion) {
@@ -47,11 +49,14 @@ export default function Accardion({
         onClick={toggleIsOpen}
       >
         {typeof title === 'string' ? <span>{title}</span> : title}
-        {isOpen ? (
-          <MdKeyboardArrowUp size={22} />
-        ) : (
-          <MdKeyboardArrowDown size={22} />
-        )}
+        <div className="flex gap-4">
+          {rightTitle}
+          {isOpen ? (
+            <MdKeyboardArrowUp size={22} />
+          ) : (
+            <MdKeyboardArrowDown size={22} />
+          )}
+        </div>
       </Button>
       <ul
         style={isOpen ? { height: list.length * 48 } : {}}
@@ -63,7 +68,7 @@ export default function Accardion({
       >
         {list.map((item, i) => (
           <li key={i} className="px-4 py-3 pl-8 text-sm">
-            {<RenderLabelList {...item} />}
+            {<RenderLabelList {...item} i={i} />}
           </li>
         ))}
       </ul>

@@ -9,12 +9,17 @@ import { Spinner } from '@/components';
 import { useCart } from '@/context/cart-context';
 import { ICardProps } from '@/components/product-card';
 
+export enum StatusOrder {
+  paid = 'paid',
+  no_paid = 'no_paid',
+}
 export interface IOrder {
   id: string;
   user_email: string;
   payment_intent: string;
   total_price: number;
   items: ICardProps[];
+  status: StatusOrder;
 }
 
 export default function GetOrder({

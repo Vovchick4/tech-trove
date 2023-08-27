@@ -7,18 +7,23 @@ export interface IGetOrderProps {
   orders: IOrder[];
 }
 
-export default function orders({ orders }: IGetOrderProps) {
+export default function Orders({ orders }: IGetOrderProps) {
   return orders.map(({ id, items, total_price }) => (
     <Accardion
       key={id}
-      title={
-        <div className="flex items-center justify-between">
-          <p>{`Order id, ${id}`}</p>
-          <p>{total_price}</p>
-        </div>
-      }
+      title={<p>{`Order id, ${id.slice(12)}`}</p>}
+      rightTitle={`${total_price}$`}
       list={items}
-      RenderLabelList={({ id, name }) => id + ' ' + name}
+      RenderLabelList={({ name, price, count, i }) => (
+        <p className="flex justify-between">
+          <span>
+            #{i + 1}, {name}, {price}$
+          </span>
+          <span>
+            {count}x, {Number(Math.ceil(count * price))}$
+          </span>
+        </p>
+      )}
     />
   ));
 }

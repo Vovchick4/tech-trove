@@ -1,8 +1,10 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import { Button } from '@/components';
-import { ICardProps } from '@/components/product-card';
 import { useCart } from '@/context/cart-context';
+import { ICardProps } from '@/components/product-card';
 
 export default function AddToCard({
   name,
@@ -11,7 +13,8 @@ export default function AddToCard({
   slug,
   preview,
 }: ICardProps) {
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
+  const inCart = useMemo(() => cart.find((c) => c.slug === slug), [cart, slug]);
 
   return (
     <div className="m-3 ">
@@ -22,7 +25,7 @@ export default function AddToCard({
         color="info"
         onClick={() => addToCart({ name, describe, price, slug, preview })}
       >
-        Add to Card
+        Add to Card {inCart && inCart.count}
       </Button>
     </div>
   );
