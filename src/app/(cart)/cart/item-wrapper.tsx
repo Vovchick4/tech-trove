@@ -25,7 +25,7 @@ const fetchOrder = async (
 
 export default function ItemWrapper() {
   const toastId = useRef<Id | null>(null);
-  const { data } = useSession();
+  const { data, status } = useSession();
   const { email, isPaymentOrder, onDataChange } = useCheckOutFormData();
   const searchparam = useSearchParams();
   const {
@@ -48,6 +48,8 @@ export default function ItemWrapper() {
     )
       return;
 
+    if (status === 'loading') return;
+
     toastId.current = toast('Loading... Order!', {
       isLoading: true,
       autoClose: false,
@@ -58,7 +60,8 @@ export default function ItemWrapper() {
       searchparam.get('payment_intent') as string,
       {
         user_email: email,
-        user_id: (data as any)?.session?.email,
+        user_id:
+          status === 'authenticated' ? (data as any)?.session?.email : null,
         items: cart,
       }
     )
@@ -83,7 +86,7 @@ export default function ItemWrapper() {
         });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, email, isPaymentOrder, (data as any)?.session?.email]);
+  }, [cart, email, isPaymentOrder, status]);
 
   if (cart.length === 0) {
     return <p>Your Cart Is Empty!</p>;
