@@ -33,12 +33,14 @@ export default function RootLayout({
         <ThemeProvider>
           <NextAuthProvider>
             <CartProvider>
-              <ProggressRouterEvent />
-              <HeaderDynamic />
-              <NavBar />
-              <OffCanvas />
-              {children}
-              <Footer />
+              <main className="flex flex-col min-h-screen">
+                <ProggressRouterEvent />
+                <HeaderDynamic />
+                <NavBar />
+                <OffCanvas />
+                <div className="w-full max-w-7xl mx-auto p-8">{children}</div>
+                <Footer />
+              </main>
               <ToastContainer />
             </CartProvider>
             <DynamicScriptComponent />

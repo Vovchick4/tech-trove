@@ -11,7 +11,7 @@ export default function Orders({ orders }: IGetOrderProps) {
   return orders.map(({ id, items, total_price }, ii) => (
     <Accardion
       key={id}
-      title={<p>{`#${ii}, Order id, ${id.slice(12)}`}</p>}
+      title={<p>{`#${ii + 1}, Order id, ${id.slice(12)}`}</p>}
       rightTitle={`${total_price}$`}
       list={items}
       RenderLabelList={({ name, price, count, i }) => (

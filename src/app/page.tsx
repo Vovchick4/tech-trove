@@ -18,7 +18,7 @@ const MultiItemCarousel = dynamic(() => import('@/components/carousel'), {
 
 export default async function Home() {
   return (
-    <main className="flex flex-col min-h-screen p-8 max-w-7xl mx-auto">
+    <div>
       <div className="rounded-[30px] bg-slate-700 p-12 text-white black:text-white">
         <div>
           <h1 className="font-bold text-3xl py-6">Shop by category</h1>
@@ -114,6 +114,6 @@ export default async function Home() {
 
         <MultiItemCarousel />
       </div>
-    </main>
+    </div>
   );
 }
