@@ -24,11 +24,9 @@ export async function POST(request: NextRequest,
                     return NextResponse.json({ payment: paymentIntents, order: getOrder, message: "this payment already has!" }, { status: 500 });
                 } else {
                     const { user_email, user_id, items } = await request.json();
-                    console.log("🚀 ~ file: route.ts:27 ~ items:", user_id);
 
                     let newOrder = null;
                     const findUser = await prisma.user.findFirst({ where: { email: user_id || "" } })
-                    console.log("🚀 ~ file: route.ts:27 ~ items:", findUser);
                     if (findUser) {
                         newOrder = await prisma.order.create({
                             data: {
