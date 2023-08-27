@@ -6,14 +6,14 @@ import { Button } from '.';
 
 export interface IAccardion {
   title: string | ReactNode;
-  rightTitle: string | ReactNode;
+  rightTitle?: string | ReactNode;
   list: any[];
   RenderLabelList: (item: any) => any;
 }
 
 export default function Accardion({
   title,
-  rightTitle,
+  rightTitle = undefined,
   list,
   RenderLabelList,
 }: IAccardion) {
@@ -50,7 +50,7 @@ export default function Accardion({
       >
         {typeof title === 'string' ? <span>{title}</span> : title}
         <div className="flex gap-4">
-          {rightTitle}
+          {rightTitle && rightTitle}
           {isOpen ? (
             <MdKeyboardArrowUp size={22} />
           ) : (

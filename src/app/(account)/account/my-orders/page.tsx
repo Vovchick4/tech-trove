@@ -29,7 +29,7 @@ export default async function MyOrders() {
         </figure>
       </h2>
       {user.Order?.length > 0 ? (
-        <div className="flex flex-col gap-4 mt-3">
+        <div className="mt-3">
           <GetOrders orders={user.Order} />
         </div>
       ) : (
